@@ -30,12 +30,14 @@ jobs:
           export VIRTUAL_ENV="$(pipenv --venv)" PATH="$(pipenv --venv)/bin:$PATH"
           pytest --cov=src -v -s --cov-fail-under=80
 
-      - name: Login to Google Cloud
-        uses: GoogleCloudPlatform/github-actions/setup-gcloud@main
+      - id: 'auth'
+        uses: 'google-github-actions/auth@v1'
         with:
-          project_id: ${{ secrets.PROJECT_ID }}
-          service_account_key: ${{ secrets.SERVICE_ACCOUNT_KEY }}
-          export_default_credentials: true
+          credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
+
+      - name: Login to Google Cloud
+        uses: google-github-actions/setup-gcloud@v1
+
       - name: Build and Push Docker Image
         uses: docker/build-push-action@v2
         with:
