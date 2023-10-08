@@ -31,7 +31,7 @@ jobs:
           pytest --cov=src -v -s --cov-fail-under=80
 
       - name: Login to Google Cloud
-        uses: google-github-actions/auth
+        uses: GoogleCloudPlatform/github-actions/setup-gcloud@main
         with:
           project_id: ${{ secrets.PROJECT_ID }}
           service_account_key: ${{ secrets.SERVICE_ACCOUNT_KEY }}
