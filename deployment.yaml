@@ -53,5 +53,4 @@ spec:
       port: 80
       targetPort: 3005
       nodePort: 31023
-
 ---
