@@ -36,9 +36,9 @@ jobs:
         with:
           credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
           token_format: 'access_token'
-          
+
       - run: |-
-        echo '${{ steps.auth.outputs.access_token }}' | docker login -u oauth2accesstoken --password-stdin https://gcr.io
+          echo '${{ steps.auth.outputs.access_token }}' | docker login -u oauth2accesstoken --password-stdin https://gcr.io
 
       - name: Build and Push Docker Image
         uses: docker/build-push-action@v2
