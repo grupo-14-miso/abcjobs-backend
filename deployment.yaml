@@ -27,21 +27,23 @@ spec:
           imagePullPolicy: Always
 
 ---
-apiVersion: cloud.google.com/v1
-kind: BackendConfig
-metadata:
-  name: public-config
-spec:
-  healthCheck:
-    checkIntervalSec: 30
-    port: 3005
-    type: HTTP
-    requestPath: /public/ping
+#apiVersion: cloud.google.com/v1
+#kind: BackendConfig
+#metadata:
+#  name: public-config
+#spec:
+##  healthCheck:
+#    checkIntervalSec: 30
+#    port: 3005
+#    type: HTTP
+#    requestPath: /public/ping
 ---
 kind: Service
 apiVersion: v1
 metadata:
   name: servicio-public
+  annotations:
+    cloud.google.com/backend-config: '{"default": "public-config"}'
 spec:
   type: NodePort
   selector:
