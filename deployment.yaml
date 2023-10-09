@@ -42,8 +42,6 @@ kind: Service
 apiVersion: v1
 metadata:
   name: servicio-public
-  annotations:
-    cloud.google.com/backend-config: '{"default": "public-config"}'
 spec:
   type: NodePort
   selector:
