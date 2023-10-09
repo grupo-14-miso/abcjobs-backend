@@ -36,7 +36,8 @@ jobs:
           credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
           token_format: 'access_token'
 
-      - run: |-
+      - run: |
+          export USE_GKE_GCLOUD_AUTH_PLUGIN=True
           echo '${{ steps.auth.outputs.access_token }}' | docker login -u oauth2accesstoken --password-stdin https://gcr.io
 
       - name: Build and Push Docker Image
@@ -51,6 +52,7 @@ jobs:
 
       - name: Deploy to GKE
         run: |
+          gcloud components install gke-gcloud-auth-plugin
           gcloud config set project abc-jobs-miso
           gcloud config set compute/zone us-central1
           gcloud container clusters get-credentials primary
