@@ -40,7 +40,7 @@ jobs:
         with:
           context: public
           push: true
-          tags: gcr.io/${{ secrets.PROJECT_ID }}/public:1.0
+          tags: gcr.io/$PROJECT_ID/public:1.0
 
       - name: Login to Google Cloud
         uses: google-github-actions/setup-gcloud@v1
