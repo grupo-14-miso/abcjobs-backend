@@ -8,9 +8,9 @@ on:
       - main
 
 env: 
-  PROJECT_ID: projectid
-  CLUSTER_NAME: clustername
-  ZONE: zone
+  PROJECT_ID: abc-jobs-miso
+  CLUSTER_NAME: primary
+  ZONE: us-central1
 
 jobs:
   build-backend:
@@ -35,14 +35,25 @@ jobs:
         with:
           credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
 
-      - name: Login to Google Cloud
-        uses: google-github-actions/setup-gcloud@v1
 
       - name: Build and Push Docker Image
         uses: docker/build-push-action@v2
         with:
           context: public
           push: true
-          tags: gcr.io/${{ secrets.PROJECT_ID }}/public:${{ github.sha }}
+          tags: gcr.io/${{ secrets.PROJECT_ID }}/public:1.0
+
+      - name: Login to Google Cloud
+        uses: google-github-actions/setup-gcloud@v1
+
+      - name: Deploy to GKE
+        run: |
+          gcloud config set project $PROJECT_ID
+          gcloud config set compute/zone $ZONE
+          gcloud container clusters get-credentials $CLUSTER_NAME
+
+      - name: Apply deployment
+        run: |
+          kubectl apply -f deployment.yaml
 
 

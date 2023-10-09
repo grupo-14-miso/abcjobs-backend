@@ -1,0 +1,57 @@
+###################################
+# PUBLIC 
+###################################
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: public
+  labels:
+    app: public
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: public
+  template:
+    metadata:
+      labels:
+        app: public
+    spec:
+      containers:
+        - name: public
+          image: gcr.io/abc-jobs-miso/public:1.0
+          #env:
+          ports:
+            - containerPort: 3005
+          # Realizar pull siempre a la imagen
+          imagePullPolicy: Always
+
+---
+apiVersion: cloud.google.com/v1
+kind: BackendConfig
+metadata:
+  name: public-config
+spec:
+  healthCheck:
+    checkIntervalSec: 30
+    port: 3005
+    type: HTTP
+    requestPath: /public/ping
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: servicio-public
+  annotations:
+    cloud.google.com/backend-config: '{"default": "public-config"}'
+spec:
+  type: NodePort
+  selector:
+    app: public
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3005
+      nodePort: 31023
+
+---
