@@ -2,7 +2,6 @@
 # Docs: https://docs.github.com/es/actions/using-workflows/workflow-syntax-for-github-actions
 name: CI/CD Pipeline Back
 
-
 on:
   push:
     branches:
