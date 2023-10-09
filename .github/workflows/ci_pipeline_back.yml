@@ -40,16 +40,16 @@ jobs:
         with:
           context: public
           push: true
-          tags: gcr.io/$PROJECT_ID/public:1.0
+          tags: gcr.io/abc-jobs-miso/public:1.0
 
       - name: Login to Google Cloud
         uses: google-github-actions/setup-gcloud@v1
 
       - name: Deploy to GKE
         run: |
-          gcloud config set project $PROJECT_ID
-          gcloud config set compute/zone $ZONE
-          gcloud container clusters get-credentials $CLUSTER_NAME
+          gcloud config set project abc-jobs-miso
+          gcloud config set compute/zone us-central1
+          gcloud container clusters get-credentials primary
 
       - name: Apply deployment
         run: |
