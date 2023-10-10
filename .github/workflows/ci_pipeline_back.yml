@@ -60,5 +60,6 @@ jobs:
       - name: Apply deployment
         run: |
           kubectl apply -f deployment.yaml
+          kubectl apply -f ingress-deployment.yaml
 
 
