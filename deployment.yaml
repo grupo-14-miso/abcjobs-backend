@@ -25,6 +25,7 @@ spec:
             - containerPort: 3005
           # Realizar pull siempre a la imagen
           imagePullPolicy: Always
+          imagePullSecrets: gcr-access-token
 
 ---
 #apiVersion: cloud.google.com/v1

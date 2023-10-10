@@ -57,6 +57,14 @@ jobs:
           gcloud config set compute/zone us-central1
           gcloud container clusters get-credentials primary
 
+      - name: Create Secret
+        run: |
+        kubectl create secret docker-registry gcr-access-token \
+          --docker-server=https://gcr.io \
+          --docker-username=oauth2accesstoken \
+          --docker-password='${{ steps.auth.outputs.access_token }}' \
+          --docker-email=j.garay@uniandes.edu.co
+      
       - name: Apply deployment
         run: |
           kubectl apply -f deployment.yaml
