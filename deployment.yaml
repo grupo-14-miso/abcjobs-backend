@@ -25,7 +25,7 @@ spec:
             - containerPort: 3005
           # Realizar pull siempre a la imagen
           imagePullPolicy: Always
-        imagePullSecrets:
+      imagePullSecrets:
         - name: gcr-access-token
 
 ---
