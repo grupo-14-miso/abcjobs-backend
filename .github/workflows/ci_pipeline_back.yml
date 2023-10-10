@@ -59,11 +59,11 @@ jobs:
 
       - name: Create Secret
         run: |
-        kubectl create secret docker-registry gcr-access-token \
-          --docker-server=https://gcr.io \
-          --docker-username=oauth2accesstoken \
-          --docker-password='${{ steps.auth.outputs.access_token }}' \
-          --docker-email=j.garay@uniandes.edu.co
+          kubectl create secret docker-registry gcr-access-token \
+            --docker-server=https://gcr.io \
+            --docker-username=oauth2accesstoken \
+            --docker-password='${{ steps.auth.outputs.access_token }}' \
+            --docker-email=j.garay@uniandes.edu.co
       
       - name: Apply deployment
         run: |
