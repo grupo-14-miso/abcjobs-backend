@@ -1,0 +1,59 @@
+###################################
+# ASSIGNMENTS 
+###################################
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: assignments
+  labels:
+    app: assignments
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: assignments
+  template:
+    metadata:
+      labels:
+        app: assignments
+    spec:
+      containers:
+        - name: assignments
+          image: gcr.io/abc-jobs-miso/assignments:1.0
+          #env:
+          ports:
+            - containerPort: 3001
+          # Realizar pull siempre a la imagen
+          imagePullPolicy: Always
+      imagePullSecrets:
+        - name: gcr-access-token
+
+---
+#apiVersion: cloud.google.com/v1
+#kind: BackendConfig
+#metadata:
+#  name: assignments-config
+#spec:
+##  healthCheck:
+#    checkIntervalSec: 30
+#    port: 3000
+#    type: HTTP
+#    requestPath: /assignments/ping
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: servicio-assignments
+  annotations:
+    cloud.google.com/backend-config: '{"default": "assignments-config"}'
+spec:
+  type: NodePort
+  selector:
+    app: assignments
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3001
+      nodePort: 31020
+      
+---

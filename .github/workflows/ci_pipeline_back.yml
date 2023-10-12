@@ -58,8 +58,9 @@ jobs:
           gcloud container clusters get-credentials primary
       
       - name: Apply deployment
+        working-directory: ./deployment
         run: |
-          kubectl apply -f deployment.yaml
-          kubectl apply -f ingress-deployment.yaml
+          kubectl apply -f public.yaml
+          kubectl apply -f ingress.yaml
 
 

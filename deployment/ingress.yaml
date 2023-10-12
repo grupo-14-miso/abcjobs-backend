@@ -27,3 +27,10 @@ spec:
                 name: servicio-users
                 port: 
                   number: 80
+          - pathType: Prefix
+            path: /assignments
+            backend:
+              service:
+                name: servicio-assignments
+                port: 
+                  number: 80
