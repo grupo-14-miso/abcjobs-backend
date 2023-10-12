@@ -1,0 +1,59 @@
+###################################
+# USERS 
+###################################
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: users
+  labels:
+    app: users
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: users
+  template:
+    metadata:
+      labels:
+        app: users
+    spec:
+      containers:
+        - name: users
+          image: gcr.io/abc-jobs-miso/users:1.0
+          #env:
+          ports:
+            - containerPort: 3000
+          # Realizar pull siempre a la imagen
+          imagePullPolicy: Always
+        imagePullSecrets:
+        - name: gcr-access-token
+
+---
+#apiVersion: cloud.google.com/v1
+#kind: BackendConfig
+#metadata:
+#  name: users-config
+#spec:
+##  healthCheck:
+#    checkIntervalSec: 30
+#    port: 3000
+#    type: HTTP
+#    requestPath: /users/ping
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: servicio-users
+  annotations:
+    cloud.google.com/backend-config: '{"default": "users-config"}'
+spec:
+  type: NodePort
+  selector:
+    app: users
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
+      nodePort: 31019
+      
+---

@@ -20,4 +20,10 @@ spec:
                 name: servicio-public
                 port:
                   number: 80
-
+          - pathType: Prefix
+            path: /users
+            backend:
+              service:
+                name: servicio-users
+                port: 
+                  number: 80
