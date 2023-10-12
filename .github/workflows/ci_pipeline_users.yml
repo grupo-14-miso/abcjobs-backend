@@ -1,6 +1,6 @@
 # Ejemplo de github action para probar python
 # Docs: https://docs.github.com/es/actions/using-workflows/workflow-syntax-for-github-actions
-name: CI/CD Pipeline Back
+name: CI/CD Pipeline Users
 
 on:
   push:
