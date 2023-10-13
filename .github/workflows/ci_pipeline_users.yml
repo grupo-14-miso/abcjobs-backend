@@ -6,6 +6,7 @@ on:
   push:
     branches:
       - main
+
 env: 
   PROJECT_ID: abc-jobs-miso
   CLUSTER_NAME: primary
@@ -25,7 +26,6 @@ jobs:
         run: |
           pip install pipenv
           pip install httmock
-          pipenv lock
           pipenv sync --system --dev
           export VIRTUAL_ENV="$(pipenv --venv)" PATH="$(pipenv --venv)/bin:$PATH"
           pytest --cov=src -v -s --cov-fail-under=80
@@ -61,3 +61,5 @@ jobs:
         working-directory: ./deployment
         run: |
           kubectl apply -f users.yaml
+
+
