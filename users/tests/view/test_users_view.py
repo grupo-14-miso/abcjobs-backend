@@ -1,7 +1,7 @@
 import json
 from unittest.mock import patch, MagicMock
 import pytest
-from src.main import app  
+from src.main import app
 
 # Mock firebase_admin for tests
 firebase_admin = MagicMock()
@@ -26,6 +26,8 @@ with patch('src.main.firebase_admin', firebase_admin):
 
         # Validate the response
         assert response.status_code == 200
+
+        # Update the expected response based on your API logic
         expected_response = [
             [{'name': 'John', 'type': 'Developer'}, {'name': 'Alice', 'type': 'Designer'}, {'name': 'John', 'type': 'Tester'}]
         ]
