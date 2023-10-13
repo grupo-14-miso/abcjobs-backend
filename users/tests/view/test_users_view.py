@@ -14,7 +14,6 @@ firebase_admin.db.reference.return_value.get.return_value = {
     'user3': {'name': 'John', 'type': 'Tester'},
 }
 
-
 # Use the mock in the tests
 with patch('src.main.firebase_admin', firebase_admin):
     def test_ping(client):
@@ -30,7 +29,9 @@ with patch('src.main.firebase_admin', firebase_admin):
 
         # Update the expected response based on your API logic
         expected_response = [
-            [{'name': 'John', 'type': 'Developer'}, {'name': 'Alice', 'type': 'Designer'}, {'name': 'John', 'type': 'Tester'}]
+            {'name': 'John', 'type': 'Developer'},
+            {'name': 'Alice', 'type': 'Designer'},
+            {'name': 'John', 'type': 'Tester'}
         ]
         assert json.loads(response.data) == expected_response
 
@@ -43,7 +44,3 @@ with patch('src.main.firebase_admin', firebase_admin):
         assert response.status_code == 201
         assert 'message' in response.json
         assert 'profile_id' in response.json
-
-    def test_ping(client):
-        response_valid = client.get("/users/ping")
-        assert response_valid.json == "Pong"

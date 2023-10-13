@@ -17,4 +17,4 @@ RUN pipenv install --deploy --ignore-pipfile
 # Expose port for users microservice
 EXPOSE 3000
 
-CMD ["pipenv", "run", "python", "main.py"]
+CMD ["pipenv", "run", "python", "src/main.py"]
