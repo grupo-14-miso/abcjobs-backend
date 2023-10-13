@@ -1,7 +1,7 @@
 import json
 from unittest.mock import patch, MagicMock
 import pytest
-from main import app
+from src.main import app  
 
 # Mock firebase_admin for tests
 firebase_admin = MagicMock()
@@ -15,7 +15,7 @@ firebase_admin.db.reference.return_value.get.return_value = {
 }
 
 # Use the mock in the tests
-with patch('src.view.user_view.firebase_admin', firebase_admin):
+with patch('main.firebase_admin', firebase_admin):
     def test_ping(client):
         response_valid = client.get("/users/ping")
         assert response_valid.json == "Pong"
@@ -40,7 +40,6 @@ with patch('src.view.user_view.firebase_admin', firebase_admin):
         assert response.status_code == 201
         assert 'message' in response.json
         assert 'profile_id' in response.json
-
 
     def test_ping(client):
         response_valid = client.get("/users/ping")
