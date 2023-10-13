@@ -1,2 +1,11 @@
 venv/**
 .idea
+
+
+# Ignore compiled Python files
+*.pyc
+__pycache__/
+**__pycache__/**
+
+.vscode
+.vscode/**

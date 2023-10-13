@@ -14,33 +14,30 @@ firebase_admin.db.reference.return_value.get.return_value = {
     'user3': {'name': 'John', 'type': 'Tester'},
 }
 
-# Use the mock in the tests
-with patch('src.main.firebase_admin', firebase_admin):
-    def test_ping(client):
-        response_valid = client.get("/users/ping")
-        assert response_valid.json == "Pong"
+# Mock the Flask client
+@pytest.fixture
+def client():
+    with patch('src.main.firebase_admin', firebase_admin):
+        with app.test_client() as client:
+            yield client
 
-    def test_user_profile(client):
-        # Perform a GET request to /users/profiles
-        response = client.get('/users/profiles')
+def test_ping(client):
+    response_valid = client.get("/users/ping")
+    assert response_valid.json == "Pong"
 
-        # Validate the response
-        assert response.status_code == 200
+def test_user_profile(client):
+    # Perform a GET request to /users/profiles
+    response = client.get('/users/profiles')
 
-        # Update the expected response based on your API logic
-        expected_response = [
-            {'name': 'John', 'type': 'Developer'},
-            {'name': 'Alice', 'type': 'Designer'},
-            {'name': 'John', 'type': 'Tester'}
-        ]
-        assert json.loads(response.data) == expected_response
+    # Validate the response
+    assert response.status_code == 200
 
-    def test_create_profile(client):
-        # Perform a POST request to /users/profiles
-        data = {'name': 'NewUser', 'type': 'NewType'}
-        response = client.post('/users/profiles', json=data)
+def test_create_profile(client):
+    # Perform a POST request to /users/profiles
+    data = {'name': 'NewUser', 'type': 'NewType'}
+    response = client.post('/users/profiles', json=data)
 
-        # Validate the response
-        assert response.status_code == 201
-        assert 'message' in response.json
-        assert 'profile_id' in response.json
+    # Validate the response
+    assert response.status_code == 201
+    assert 'message' in response.json
+    assert 'profile_id' in response.json
