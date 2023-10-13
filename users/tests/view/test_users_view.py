@@ -14,6 +14,7 @@ firebase_admin.db.reference.return_value.get.return_value = {
     'user3': {'name': 'John', 'type': 'Tester'},
 }
 
+
 # Use the mock in the tests
 with patch('src.main.firebase_admin', firebase_admin):
     def test_ping(client):
