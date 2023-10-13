@@ -13,11 +13,7 @@ pytest-mock = "~=3.10.0"
 pytest-env = "~=0.8.1"
 requests = "*"
 firebase-admin = "*"
-firebase_admin = "*"
 google-cloud-datastore = "*"
-
-
-
 httmock = "*"
 coverage = "*"
 pytest-cov = "*"
@@ -25,4 +21,4 @@ pytest-cov = "*"
 [dev-packages]
 
 [requires]
-python_version = "3.11"
+python_version = "3.8"
