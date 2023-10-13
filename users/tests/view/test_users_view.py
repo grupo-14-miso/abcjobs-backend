@@ -15,7 +15,7 @@ firebase_admin.db.reference.return_value.get.return_value = {
 }
 
 # Use the mock in the tests
-with patch('main.firebase_admin', firebase_admin):
+with patch('src.main.firebase_admin', firebase_admin):
     def test_ping(client):
         response_valid = client.get("/users/ping")
         assert response_valid.json == "Pong"
