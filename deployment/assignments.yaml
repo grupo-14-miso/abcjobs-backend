@@ -1,3 +1,4 @@
+---
 ###################################
 # ASSIGNMENTS 
 ###################################
@@ -20,7 +21,13 @@ spec:
       containers:
         - name: assignments
           image: gcr.io/abc-jobs-miso/assignments:1.0
-          #env:
+          env:
+            - name: GOOGLE_APPLICATION_CREDENTIALS
+              value: /etc/credentials/credentials.json
+          volumeMounts:
+            - name: service-account-credentials
+              mountPath: "/etc/credentials"
+              readOnly: true
           ports:
             - containerPort: 3001
           # Realizar pull siempre a la imagen
