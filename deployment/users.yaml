@@ -17,6 +17,7 @@ spec:
       labels:
         app: users
     spec:
+      serviceAccountName: kubernetes@abc-jobs-miso.iam.gserviceaccount.com
       containers:
         - name: users
           image: gcr.io/abc-jobs-miso/users:1.0
