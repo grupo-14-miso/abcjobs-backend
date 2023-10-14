@@ -19,11 +19,10 @@ class VistaUserProfile(Resource):
         # Query all user profiles
         query = client.query(kind='profiles')
         results = query.fetch()
-        # Create a set to store unique names
         unique_names = set()
         user_profiles = []
         for entity in results:
-            # Check if the name is unique
+        # Check if the name is unique
             if entity['name'] not in unique_names:
                 unique_names.add(entity['name'])
                 user_profiles.append({
@@ -32,22 +31,20 @@ class VistaUserProfile(Resource):
                     # Add more fields as needed
                 })
 
-         # Create a dictionary to store profiles grouped by type
         profiles_by_type = {}
-        for entity in user_profiles:
-            profile_type = entity['type']
-            # If the type is not already a key in the dictionary, create an empty list
+        for profile in user_profiles:
+            profile_type = profile['type']
             if profile_type not in profiles_by_type:
                 profiles_by_type[profile_type] = []
-            # Append the profile details to the list for the corresponding type
-            profiles_by_type[profile_type].append({
-                'name': entity['name'],
-                'type': entity['type'],
-                # Add more fields as needed
-            })
+            profiles_by_type[profile_type].append(profile)
+
         # Convert the dictionary values to a list before returning
-        user_profiles_grouped_by_type = list(profiles_by_type.values())
-        return jsonify(user_profiles_grouped_by_type)
+        grouped_profiles = [{'type': profile_type, 'names': [entry['name'] for entry in entries]}
+                            for profile_type, entries in profiles_by_type.items()]
+
+        return jsonify(grouped_profiles)
+    
+
 
 
     def post(self):
