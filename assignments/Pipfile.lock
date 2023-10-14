@@ -1,11 +1,11 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "c4f63eb096f65d83b7bdf43494ba5075da0ce5635cf6a1a35c8373b15ce6e9f6"
+            "sha256": "dcf119f1ef4e842b8c1999c3aeaa04f1f348eef65b4ffea99feffa19d5ec87aa"
         },
         "pipfile-spec": 6,
         "requires": {
-            "python_version": "3.11"
+            "python_version": "3.8"
         },
         "sources": [
             {
@@ -311,6 +311,14 @@
                 "sha256:efc8ad4e6fc4f1752ebfb58aefece8b4e3c4cae940b0994d43649bdfce8d0d4f"
             ],
             "version": "==41.0.4"
+        },
+        "exceptiongroup": {
+            "hashes": [
+                "sha256:097acd85d473d75af5bb98e41b61ff7fe35efe6675e4f9370ec6ec5126d160e9",
+                "sha256:343280667a4585d195ca1cf9cef84a4e178c4b6cf2274caef9859782b567d5e3"
+            ],
+            "markers": "python_version < '3.11'",
+            "version": "==1.1.3"
         },
         "firebase-admin": {
             "hashes": [
@@ -821,9 +829,6 @@
             "version": "==2.21"
         },
         "pyjwt": {
-            "extras": [
-                "crypto"
-            ],
             "hashes": [
                 "sha256:57e28d156e3d5c10088e0c68abb90bfac3df82b40a71bd0daa20c65ccd5c23de",
                 "sha256:59127c392cc44c2da5bb3192169a91f429924e17aff6534d70fdc02ab3e04320"
@@ -906,6 +911,14 @@
             ],
             "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'",
             "version": "==1.16.0"
+        },
+        "tomli": {
+            "hashes": [
+                "sha256:939de3e7a6161af0c887ef91b7d41a53e7c5a1ca976325f429cb46ea9bc30ecc",
+                "sha256:de526c12914f0c550d15924c62d72abc48d6fe7364aa87328337a31007fe8a4f"
+            ],
+            "markers": "python_version < '3.11'",
+            "version": "==2.0.1"
         },
         "uritemplate": {
             "hashes": [
