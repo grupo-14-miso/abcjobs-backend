@@ -18,8 +18,10 @@ firebase_admin.db.reference.return_value.get.return_value = {
 @pytest.fixture
 def client():
     with patch('src.main.firebase_admin', firebase_admin):
-        with app.test_client() as client:
-            yield client
+        with patch('google.auth.default', return_value=(None, None)):  # Mock GCP authentication
+            with patch('google.cloud.datastore.Client', autospec=True):  # Mock Datastore Client
+                with app.test_client() as client:
+                    yield client
 
 def test_ping(client):
     response_valid = client.get("/users/ping")
@@ -31,6 +33,7 @@ def test_user_profile(client):
 
     # Validate the response
     assert response.status_code == 200
+    
 
 def test_create_profile(client):
     # Perform a POST request to /users/profiles
