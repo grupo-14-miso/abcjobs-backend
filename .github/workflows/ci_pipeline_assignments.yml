@@ -60,6 +60,7 @@ jobs:
       - name: Apply deployment
         working-directory: ./deployment
         run: |
+          kubectl delete -f assignments.yaml
           kubectl apply -f assignments.yaml
 
 
