@@ -60,6 +60,7 @@ jobs:
       - name: Apply deployment
         working-directory: ./deployment
         run: |
+          kubectl delete -f users.yaml
           kubectl apply -f users.yaml
 
 
