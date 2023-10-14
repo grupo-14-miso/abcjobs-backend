@@ -1,8 +1,5 @@
-import os
-
 from flask_restful import Resource
 from flask import request
-import requests
 from flask import jsonify
 from google.cloud import datastore
 import uuid
