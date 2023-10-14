@@ -7,6 +7,7 @@ from firebase_admin import credentials
 
 from src.view.user_view import VistaPing
 from src.view.user_view import VistaUserProfile
+from src.view.user_view import VistaUsers
 
 app = Flask(__name__)
 
@@ -16,6 +17,7 @@ firebase_admin.initialize_app(cred)
 app.config['PROPAGATE_EXCEPTIONS'] = True
 
 api = Api(app)
+api.add_resource(VistaUsers, "/users")
 api.add_resource(VistaPing, "/users/ping")
 api.add_resource(VistaUserProfile, "/users/profiles")
 
