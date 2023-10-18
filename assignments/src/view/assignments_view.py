@@ -6,6 +6,8 @@ from flask import jsonify
 from google.cloud import datastore
 import uuid
 from datetime import datetime
+from google.cloud import pubsub_v1
+import json
 
 
 
@@ -69,3 +71,39 @@ class AssignmentsView(Resource):
 
         return jsonify(assignments)
 
+class AssignmentSubmissionView(Resource):
+    def __init__(self, publisher, topic_path):
+        self.publisher = publisher
+        self.topic_path = topic_path
+
+    def post(self, assignment_id):
+        try:
+            data = request.get_json()
+
+            # Validate required fields
+            required_fields = ['answers', 'correct_answer', 'selected_answer', 'description']
+            for field in required_fields:
+                if field not in data:
+                    return {'message': f'{field} is a required field'}, 400
+
+            # Add created_timestamp to the message
+            data['created_timestamp'] = datetime.utcnow().isoformat()
+
+            # Publish the message to Pub/Sub
+            message = {
+                'assignment_id': assignment_id,
+                'answers': data['answers'],
+                'correct_answer': data['correct_answer'],
+                'selected_answer': data['selected_answer'],
+                'description': data['description'],
+                'created_timestamp': data['created_timestamp']
+            }
+
+            message_data = json.dumps(message).encode('utf-8')
+            future = self.publisher.publish(self.topic_path, data=message_data)
+            future.result()  # Wait for the message to be published
+
+            return {'message': 'Assignment submitted successfully'}, 201
+
+        except Exception as e:
+            return {'message': str(e)}, 500
