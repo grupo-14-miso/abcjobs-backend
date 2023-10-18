@@ -18,6 +18,7 @@ httmock = "*"
 coverage = "*"
 pytest-cov = "*"
 google-cloud-pubsub = "*"
+exceptiongroup = "*"
 
 [dev-packages]
 
