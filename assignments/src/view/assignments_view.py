@@ -39,7 +39,8 @@ class AssignmentsView(Resource):
             'rol': data['rol'],
             'type': data['type'],
             'focus': data['focus'],
-            'questions': data['questions']
+            'questions': data['questions'],
+            'resolved_questions': None
         }
 
         # Store the assignment in Datastore
@@ -72,6 +73,42 @@ class AssignmentsView(Resource):
             assignments.append(assignment_data)
 
         return jsonify(assignments)
+
+
+    def put(self):
+        try:
+            # Initialize the Datastore client
+            client = datastore.Client()
+            data = request.get_json()
+            assignment_id = data['assignment_id']
+            query = client.query(kind='assignments-data')
+            results = query.fetch()
+            assignment_data = {}
+            for entity in results:
+                if str(entity.id) == assignment_id:
+                    assignment_data = entity
+                    break
+            #Update assignment data
+            questions = assignment_data['questions']
+            for question in questions:
+                if data['description'] == question['description']:
+                    questions.remove(question)
+                    break
+            if assignment_data['resolved_questions'] is None:
+                assignment_data['resolved_questions'] = []
+            assignment_data['resolved_questions'].append(data)
+
+            key = client.key('assignments-data',int(assignment_id))
+            assignments_ref = datastore.Entity(key=key)
+
+            # Store the assignment in Datastore
+            assignments_ref.update(assignment_data)
+            client.put(assignments_ref)
+            return {'message': 'Assignment updated on question successfully'}, 201
+
+        except Exception as e:
+            return {'message': str(e)}, 500
+
 
 class AssignmentSubmissionView(Resource):
     def __init__(self, publisher, topic_path):

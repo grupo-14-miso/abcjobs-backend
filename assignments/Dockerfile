@@ -3,7 +3,7 @@ FROM python:3.11
 # Install Pipenv
 RUN pip3 install pipenv
 
-ENV PROJECT_DIR /users
+ENV PROJECT_DIR /assignments
 # Set work directory
 WORKDIR $PROJECT_DIR
 
