@@ -65,7 +65,9 @@ class AssignmentsView(Resource):
                 'rol': entity['rol'],
                 'type': entity['type'],
                 'focus': entity['focus'],
-                'questions': entity['questions']
+                'questions': entity['questions'],
+                'status': entity['status'],
+                'result': entity['result']
             }
             assignments.append(assignment_data)
 
