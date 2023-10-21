@@ -106,7 +106,15 @@ class AssignmentsView(Resource):
                     break
             if assignment_data['resolved_questions'] is None:
                 assignment_data['resolved_questions'] = []
-            assignment_data['resolved_questions'].append(data)
+
+            present_question = False
+            for question in assignment_data['resolved_questions']:
+                if data['description'] == question['description']:
+                    present_question = True
+                    break
+
+            if not present_question:
+                assignment_data['resolved_questions'].append(data)
 
             key = client.key('assignments-data',int(assignment_id))
             assignments_ref = datastore.Entity(key=key)
