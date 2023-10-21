@@ -9,7 +9,7 @@ from datetime import datetime
 from google.cloud import pubsub_v1
 import json
 
-
+assigments_entity='assignments-data'
 
 class VistaPing(Resource): 
     def get(self):
@@ -30,7 +30,7 @@ class AssignmentsView(Resource):
         # Initialize the Datastore client
         client = datastore.Client()
 
-        key = client.key('assignments-data')
+        key = client.key(assigments_entity)
         assignments_ref = datastore.Entity(key=key)
 
         # Build the assignment data
@@ -56,7 +56,7 @@ class AssignmentsView(Resource):
         client = datastore.Client()
 
         # Query all assignments
-        query = client.query(kind='assignments-data')
+        query = client.query(kind=assigments_entity)
         results = query.fetch()
 
         assignments = []
@@ -146,3 +146,42 @@ class AssignmentSubmissionView(Resource):
 
         except Exception as e:
             return {'message': str(e)}, 500
+
+class QuestionnaireView(Resource):
+    def post(self, assignment_id) :
+        client = datastore.Client()
+        key = client.key(assigments_entity, int(assignment_id))
+
+        # Use the key to retrieve the entity
+        entity = client.get(key)
+        if entity:
+            entity['status'] = 'finished'
+
+            entity['status'] = 'finished'
+
+            # Calculate the score based on resolved_questions
+            total_questions = len(entity['resolved_questions'])
+            correct_answers_count = 0
+
+            for question in entity['resolved_questions']:
+                correct_answers = question.get('correct_answer', [])
+                selected_answers = question.get('selected_answer', [])
+
+                # Check if at least one selected answer matches any correct answer
+                if any(answer in correct_answers for answer in selected_answers):
+                    correct_answers_count += 1
+
+            # Calculate the percentage of correct answers
+            if total_questions > 0:
+                score_percentage = (correct_answers_count / total_questions) * 100
+            else:
+                score_percentage = 0
+
+            # Update the 'score' attribute
+            entity['result'] = score_percentage
+
+            # Save the changes back to Firestore
+            client.put(entity)
+        else:
+            print(f"No record found with key {assignment_id}")
+        return {'message': 'Assignment completed'}, 201

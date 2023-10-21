@@ -98,3 +98,17 @@ def test_assignments_with_pubsub_mock(mock_firebase_admin, mock_auth_default, mo
     assert 'message' in response.json
     print(response.json)
 
+@patch('google.cloud.datastore.Client')
+def test_questionnaire_view(mock_firestore_client, client):
+    # Mock Firestore client
+    firestore_client = mock_firestore_client.return_value
+    mocked_entity = MagicMock()
+    mocked_entity.get.return_value = [{"created_timestamp":"2023-10-19T02:16:49.503418","description":"What is the difference between a list and a tuple in Python?","answers":[{"a":"A list is mutable, while a tuple is immutable."},{"b":"A list can contain any type of data, while a tuple can only contain primitive data types."},{"c":"A list is used to store a collection of items, while a tuple is used to store a fixed-size collection of items."},{"d":"All of the above"}],"correct_answer":["a"],"selected_answer":["d"],"assignment_id":"5714489739575296"},{"created_timestamp":"2023-10-19T02:16:49.503418","description":"What is the difference between a list and a tuple in Python?","answers":[{"a":"A list is mutable, while a tuple is immutable."},{"b":"A list can contain any type of data, while a tuple can only contain primitive data types."},{"c":"A list is used to store a collection of items, while a tuple is used to store a fixed-size collection of items."},{"d":"All of the above"}],"correct_answer":["d"],"selected_answer":["d"],"assignment_id":"5714489739575296"}]
+    firestore_client.get.return_value = mocked_entity
+
+    # Perform the request to the endpoint
+    response = client.post('/assignments/questionnaire/123')
+
+    # Validate the response
+    assert response.status_code == 201
+    assert 'message' in response.json
