@@ -40,7 +40,9 @@ class AssignmentsView(Resource):
             'type': data['type'],
             'focus': data['focus'],
             'questions': data['questions'],
-            'resolved_questions': None
+            'resolved_questions': None,
+            'status': 'to_do',
+            'result': 0.0
         }
 
         # Store the assignment in Datastore
@@ -57,7 +59,15 @@ class AssignmentsView(Resource):
 
         # Query all assignments
         query = client.query(kind=assigments_entity)
+        
+        status = request.args.get('status')
+
+        if status:
+            query.add_filter('status', '=', status)
+        
         results = query.fetch()
+        
+        
 
         assignments = []
         for entity in results:
