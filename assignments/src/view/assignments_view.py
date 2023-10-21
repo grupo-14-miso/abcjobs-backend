@@ -93,7 +93,7 @@ class AssignmentsView(Resource):
             assignment_id = data['assignment_id']
             query = client.query(kind='assignments-data')
             results = query.fetch()
-            assignment_data = {}
+            assignment_data = {'questions': [], 'resolved_questions': []}
             for entity in results:
                 if str(entity.id) == assignment_id:
                     assignment_data = entity

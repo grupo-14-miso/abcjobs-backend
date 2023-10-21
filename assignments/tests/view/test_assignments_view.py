@@ -112,3 +112,37 @@ def test_questionnaire_view(mock_firestore_client, client):
     # Validate the response
     assert response.status_code == 201
     assert 'message' in response.json
+
+def test_update_assignment_with_question(client):
+    data = {
+        "assignment_id": "5352686694170624",
+        "answers": [
+            {
+                "a": "A list is mutable, while a tuple is immutable."
+            },
+            {
+                "b": "A list can contain any type of data, while a tuple can only contain primitive data types."
+            },
+            {
+                "c": "A list is used to store a collection of items, while a tuple is used to store a fixed-size collection of items."
+            },
+            {
+                "d": "All of the above"
+            }
+        ],
+        "correct_answer": [
+            "d"
+        ],
+        "selected_answer": [
+            "d"
+        ],
+        "description": "What is the difference between a list and a tuple in Python?",
+        "created_timestamp": "2023-10-19T02:16:49.503418"
+    }
+    response = client.put('/assignments', json=data)
+    # Validate the response
+    assert response.status_code == 201
+    assert 'message' in response.json
+    print(response.json)
+
+
