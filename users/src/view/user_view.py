@@ -197,6 +197,7 @@ class VistaUsers(Resource):
                 'educacion': entity['educacion'],
                 'experiencia': entity['experiencia'],
                 'idiomas': entity['idiomas'],
+                'rol':entity['rol']
             })
 
         return jsonify(user_profiles)
