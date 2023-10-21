@@ -7,7 +7,7 @@ from firebase_admin import credentials
 from google.cloud import pubsub_v1
 from google.oauth2 import service_account
 
-from src.view.assignments_view import VistaPing, AssignmentsView, AssignmentSubmissionView
+from src.view.assignments_view import VistaPing, AssignmentsView, AssignmentSubmissionView, QuestionnaireView
 
 
 app = Flask(__name__)
@@ -28,6 +28,7 @@ api = Api(app)
 api.add_resource(VistaPing, "/assignments/ping")
 api.add_resource(AssignmentsView, "/assignments")
 api.add_resource(AssignmentSubmissionView, "/assignments/<string:assignment_id>", resource_class_kwargs={'publisher': publisher, 'topic_path': topic_path})
+api.add_resource(QuestionnaireView, "/assignments/questionnaire/<string:assignment_id>")
 
 
 
