@@ -60,10 +60,10 @@ class AssignmentsView(Resource):
         # Query all assignments
         query = client.query(kind=assigments_entity)
         
-        status = request.args.get('status')
+        status = request.args.getlist('status')
 
         if status:
-            query.add_filter('status', '=', status)
+            query.add_filter('status', 'IN', status)
         
         results = query.fetch()
         
