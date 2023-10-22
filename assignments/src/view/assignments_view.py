@@ -104,7 +104,7 @@ class AssignmentsView(Resource):
                 if data['description'] == question['description']:
                     questions.remove(question)
                     break
-            if assignment_data['resolved_questions'] is None:
+            if 'resolved_questions' not in assignment_data:
                 assignment_data['resolved_questions'] = []
 
             present_question = False
