@@ -113,9 +113,45 @@ def test_questionnaire_view(mock_firestore_client, client):
     assert response.status_code == 201
     assert 'message' in response.json
 
-def test_update_assignment_with_question(client):
+@patch('google.cloud.datastore.Client')
+def test_update_assignment_with_question(mock_firestore_client, client):
+
+    # Mock Firestore client
+    firestore_client = mock_firestore_client.return_value
+    mocked_entity = MagicMock()
+    mocked_entity.get.return_value = {
+        "assignment_id": 123,
+        "focus": "Java",
+        "questions": [{
+                "answers": [
+                    {
+                        "a": "A list is mutable, while a tuple is immutable."
+                    },
+                    {
+                        "b": "A list can contain any type of data, while a tuple can only contain primitive data types."
+                    },
+                    {
+                        "c": "A list is used to store a collection of items, while a tuple is used to store a fixed-size collection of items."
+                    },
+                    {
+                        "d": "All of the above"
+                    }
+                ],
+                "correct_answer": [
+                    "d"
+                ],
+                "description": "What is the difference between a list and a tuple in Python?"
+            }],
+        "result": 22.22222222222222,
+        "rol": "Developer",
+        "status": "to_do",
+        "type": "Technical"
+    }
+
+    firestore_client.get.return_value = mocked_entity
+
     data = {
-        "assignment_id": "5352686694170624",
+        "assignment_id": "123",
         "answers": [
             {
                 "a": "A list is mutable, while a tuple is immutable."
