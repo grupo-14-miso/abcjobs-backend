@@ -40,7 +40,6 @@ class AssignmentsView(Resource):
             'type': data['type'],
             'focus': data['focus'],
             'questions': data['questions'],
-            'resolved_questions': None,
             'status': 'to_do',
             'result': 0.0
         }
