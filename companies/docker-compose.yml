@@ -1,0 +1,14 @@
+version: "3"
+services:
+  api:
+    build: .
+    restart: always
+    ports:
+      - "3002:3002"
+    networks:
+      - RED_web
+
+networks:
+  RED_web:
+    driver: bridge
+
