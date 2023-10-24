@@ -3,14 +3,14 @@ from flask_cors import CORS
 from flask_jwt_extended import JWTManager
 from flask_restful import Api
 
-from src.view.company_view import VistaPing
+from src.view.interview_view import VistaPing
 
 app = Flask(__name__)
 
 app.config['PROPAGATE_EXCEPTIONS'] = True
 
 api = Api(app)
-api.add_resource(VistaPing, "/companies/ping")
+api.add_resource(VistaPing, "/interviews/ping")
 
 
 cors = CORS(app)
