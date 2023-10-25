@@ -62,7 +62,6 @@ jobs:
       - name: Apply deployment
         working-directory: ./deployment
         run: |
-#          kubectl delete -f interviews.yaml
           kubectl apply -f interviews.yaml
 
 

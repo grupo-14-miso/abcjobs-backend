@@ -62,7 +62,6 @@ jobs:
       - name: Apply deployment
         working-directory: ./deployment
         run: |
-#          kubectl delete -f companies.yaml
           kubectl apply -f companies.yaml
 
 
