@@ -34,3 +34,17 @@ spec:
                 name: servicio-assignments
                 port: 
                   number: 80
+          - pathType: Prefix
+            path: /companies
+            backend:
+              service:
+                name: servicio-companies
+                port: 
+                  number: 80
+          - pathType: Prefix
+            path: /interviews
+            backend:
+              service:
+                name: servicio-assignments
+                port: 
+                  number: 80        
