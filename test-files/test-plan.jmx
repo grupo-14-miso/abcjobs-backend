@@ -25,7 +25,7 @@
         <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
       </ThreadGroup>
       <hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="HTTP Request Ping" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Ping Assignments" enabled="true">
           <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
             <collectionProp name="Arguments.arguments"/>
@@ -85,7 +85,7 @@
         <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
       </ThreadGroup>
       <hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="HTTP Request" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Ping Users" enabled="true">
           <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
             <collectionProp name="Arguments.arguments"/>
@@ -145,7 +145,7 @@
         <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
       </ThreadGroup>
       <hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="HTTP Request" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Ping Interviews" enabled="true">
           <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
             <collectionProp name="Arguments.arguments"/>
@@ -205,7 +205,7 @@
         <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
       </ThreadGroup>
       <hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="HTTP Request" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Ping Companies" enabled="true">
           <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
             <collectionProp name="Arguments.arguments"/>
