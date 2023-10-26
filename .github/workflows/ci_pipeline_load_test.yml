@@ -1,0 +1,37 @@
+# Ejemplo de github action para probar python
+# Docs: https://docs.github.com/es/actions/using-workflows/workflow-syntax-for-github-actions
+name: CI/CD Pipeline Load Test
+
+on:
+  workflow_run:
+    workflows: [CI/CD Pipeline Back]
+    types:
+      - completed
+
+jobs:
+  load-test:
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 1
+    steps:
+      - uses: actions/checkout@v1
+      - name: Run Jmeter Tests
+        uses: QAInsights/PerfAction@v3.1
+        with:
+          test-plan-path: test-files/test-plan.jmx
+          args: ''
+
+      - name: Upload Results
+        uses: actions/upload-artifact@v2
+        with:
+          name: jmeter-results
+          path: result.jtl
+      - name: Analyze Results with Latency Lingo
+        uses: latency-lingo/github-action@v0.0.2
+        with:
+          api-key: ${{ secrets.LATENCY_LINGO_API_KEY }}
+          file: result.jtl
+          label: Checkout Flow Automated Test Plan
+          format: jmeter
+
+
