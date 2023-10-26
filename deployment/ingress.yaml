@@ -45,6 +45,6 @@ spec:
             path: /interviews
             backend:
               service:
-                name: servicio-assignments
+                name: servicio-interviews
                 port: 
                   number: 80        
