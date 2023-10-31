@@ -59,6 +59,38 @@ def test_get_request_interview_company(mock_datastore_client, client):
 
     assert response.status_code == 200
 
+
+@patch('google.cloud.datastore.Client')
+def test_post_request_interview(mock_datastore_client, client):
+    mock_client_instance = Mock()
+    mock_datastore_client.return_value = mock_client_instance
+    mock_client_instance.put.return_value = None  # You can customize the return value if needed
+
+    # Prepare test data
+    test_data = {
+        'id_company': 'company_id',
+        'id_offer': 'offer_id',
+        'candidates': ['candidate_id_1', 'candidate_id_2'],
+        'link': 'http://example.com',
+        'date': '21/04/2023 14:00',
+        'description': 'Entrevista miso',
+    }
+
+    # Set up mock pre_interview results
+    mock_pre_interview_results = [
+        MagicMock(id_offer='offer_id_1', id_candidate='candidate_id_1'),
+        MagicMock(id_offer='offer_id_2', id_candidate='candidate_id_2'),
+        # Add more mock results as needed
+    ]
+
+    mock_client_instance.query.return_value.fetch.return_value = mock_pre_interview_results
+
+
+    response = client.post("/interview", json=test_data)
+
+    # Assertions
+    assert response.status_code == 200
+
 def test_ping(client):
         response_valid = client.get("/interviews/ping")
         assert response_valid.json == "Pong"

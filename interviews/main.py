@@ -5,7 +5,7 @@ from flask_restful import Api
 import firebase_admin
 from firebase_admin import credentials
 
-from src.view.interview_view import VistaPing, VistaSelectionUser, VistaInterviewCompany
+from src.view.interview_view import VistaPing, VistaSelectionUser, VistaInterviewCompany, VistaInterview
 
 app = Flask(__name__)
 
@@ -19,6 +19,7 @@ api = Api(app)
 api.add_resource(VistaPing, "/interviews/ping")
 api.add_resource(VistaSelectionUser, "/interviews/pre-candidate")
 api.add_resource(VistaInterviewCompany, "/interviews/offer/<string:id_offer>/pre")
+api.add_resource(VistaInterview, "/interview")
 
 
 cors = CORS(app)
