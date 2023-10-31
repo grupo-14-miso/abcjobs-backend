@@ -143,30 +143,26 @@ class VistaUsers(Resource):
 
         # Retrieve optional query parameters
         soft_skills = request.args.getlist('soft_skills')
-        rol = request.args.get('rol')
+        rol = request.args.getlist('rol')
         lenguajes_programacion = request.args.getlist('lenguajes_programacion')
         tecnologias_herramientas = request.args.getlist('tecnologias_herramientas')
         idiomas = request.args.getlist('idiomas')
 
         # Apply filters based on optional query parameters
         if soft_skills:
-            for skill in soft_skills:
-                query.add_filter('soft_skills', '=', skill)
+            query.add_filter('soft_skills', 'in', soft_skills)
 
         if rol:
-            query.add_filter('rol', '=', rol)
+            query.add_filter('rol', 'IN', rol)
 
         if lenguajes_programacion:
-            for language in lenguajes_programacion:
-                query.add_filter('lenguajes_programacion', '=', language)
+            query.add_filter('lenguajes_programacion', 'IN', lenguajes_programacion)
 
         if idiomas:
-            for idioma_value in idiomas:
-                query.add_filter('idiomas.idioma', '=', idioma_value)
+            query.add_filter('idiomas.idioma', 'IN', idiomas)
 
         if tecnologias_herramientas:
-            for tecnologia in tecnologias_herramientas:
-                query.add_filter('tecnologias_herramientas', '=', tecnologia)
+            query.add_filter('tecnologias_herramientas', 'IN', tecnologias_herramientas)
 
         results = query.fetch()
 
@@ -174,6 +170,7 @@ class VistaUsers(Resource):
 
         for entity in results:
             user_profiles.append({
+                'key': entity.key.path[-1],
                 'id_candidato': entity['id_candidato'],
                 'email': entity['email'],
                 'password': entity['password'],
