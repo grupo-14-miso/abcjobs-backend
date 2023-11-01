@@ -17,7 +17,7 @@ google-cloud-datastore = "*"
 httmock = "*"
 coverage = "*"
 pytest-cov = "*"
-
+exceptiongroup = "*"
 
 [dev-packages]
 
