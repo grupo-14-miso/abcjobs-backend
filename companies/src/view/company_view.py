@@ -38,8 +38,8 @@ class CompanyView(Resource):
             'phone_number': data['phone_number'],
             'country': data['country'],
             'email': data['email'],
-            'created_date': date.today(),
-            'last_modified': date.today()
+            'created_date': date.today().strftime("%Y-%m-%d"),
+            'last_modified': date.today().strftime("%Y-%m-%d")
         }
 
         companies_ref.update(company_data)
@@ -70,8 +70,8 @@ class OfferView(Resource):
             'description': data['description'],
             'start_date': data['start_date'],
             'end_date': data['end_date'],
-            'created_date': date.today(),
-            'last_modified': date.today()
+            'created_date': date.today().strftime("%Y-%m-%d"),
+            'last_modified': date.today().strftime("%Y-%m-%d")
         }
 
         offers_ref.update(offers_data)
