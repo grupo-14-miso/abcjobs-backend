@@ -19,7 +19,7 @@ api = Api(app)
 api.add_resource(VistaPing, "/interviews/ping")
 api.add_resource(VistaSelectionUser, "/interviews/pre-candidate")
 api.add_resource(VistaInterviewCompany, "/interviews/offer/<string:id_offer>/pre")
-api.add_resource(VistaInterview, "/interview")
+api.add_resource(VistaInterview, "/interviews")
 
 
 cors = CORS(app)
