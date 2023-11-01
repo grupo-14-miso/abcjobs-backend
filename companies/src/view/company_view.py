@@ -1,7 +1,7 @@
 import uuid
 from datetime import date
 
-from flask import request
+from flask import request, jsonify
 from flask_restful import Resource
 from google.cloud import datastore
 
@@ -46,6 +46,31 @@ class CompanyView(Resource):
         client.put(companies_ref)
         return {'message': 'Company created successfully', 'company_id': company_data['company_id']}, 201
 
+    def get(self):
+        # Initialize the Datastore client
+        client = datastore.Client()
+
+        # Query all assignments
+        query = client.query(kind=companies_entity)
+
+        results = query.fetch()
+
+        companies = []
+        for data in results:
+            company_data = {
+                'company_id': data.id,
+                'document_type': data['document_type'],
+                'document_number': data['document_number'],
+                'name': data['name'],
+                'phone_number': data['phone_number'],
+                'country': data['country'],
+                'email': data['email'],
+                'created_date': data['created_date'],
+                'last_modified': data['last_modified']
+            }
+            companies.append(company_data)
+        return jsonify(companies)
+
 class OfferView(Resource):
     def post(self):
         data = request.get_json()
@@ -77,4 +102,30 @@ class OfferView(Resource):
         offers_ref.update(offers_data)
         client.put(offers_ref)
         return {'message': 'Offer created successfully', 'offer_id': offers_data['offer_id']}, 201
+
+
+    def get(self):
+        # Initialize the Datastore client
+        client = datastore.Client()
+
+        # Query all assignments
+        query = client.query(kind=offers_entity)
+
+        results = query.fetch()
+
+        offers = []
+
+        for data in results:
+            offer_data = {
+                'offer_id': data.id,  # Generate a unique ID
+                'company_id': data['company_id'],
+                'name': data['name'],
+                'description': data['description'],
+                'start_date': data['start_date'],
+                'end_date': data['end_date'],
+                'created_date': data['created_date'],
+                'last_modified': data['last_modified']
+            }
+            offers.append(offer_data)
+        return jsonify(offers)
 
