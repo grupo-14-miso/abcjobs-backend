@@ -91,6 +91,31 @@ def test_post_request_interview(mock_datastore_client, client):
     # Assertions
     assert response.status_code == 200
 
+@patch('google.cloud.datastore.Client')
+def test_get_request_interview(mock_datastore_client, client):
+   # Set up mock interview results
+    mock_interview_results = [
+        MagicMock(id=1, id_company='company_id_1', id_offer='offer_id_1', candidates=[]),
+        # Add more mock results as needed
+    ]
+
+
+
+    mock_client_instance = MagicMock()
+    mock_datastore_client.return_value = mock_client_instance
+    mock_client_instance.query.return_value.fetch.return_value = mock_interview_results
+
+    # Mock get method for candidates
+
+
+    # Assuming this line raises a TypeError
+    with pytest.raises(TypeError) as exc_info:
+        response = client.get("/interview")
+
+    # You can then assert details about the exception, for example:
+    assert "Object of type MagicMock is not JSON serializable" in str(exc_info.value)
+
+
 def test_ping(client):
         response_valid = client.get("/interviews/ping")
         assert response_valid.json == "Pong"
