@@ -103,13 +103,13 @@ class OfferView(Resource):
         client.put(offers_ref)
         return {'message': 'Offer created successfully', 'offer_id': offers_data['offer_id']}, 201
 
-
-    def get(self):
+class OfferByCompanyView(Resource):
+    def get(self, company_id):
         # Initialize the Datastore client
         client = datastore.Client()
 
         # Query all assignments
-        query = client.query(kind=offers_entity)
+        query = client.query(kind=offers_entity).add_filter('company_id', '=', company_id)
 
         results = query.fetch()
 

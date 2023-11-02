@@ -29,7 +29,7 @@ def test_get_companies(client):
 
 def test_get_offers(client):
         # Perform get request to offer
-        response = client.get("/companies/offer")
+        response = client.get("/companies/offer/123456")
         # Validate the response
         assert response.status_code == 200
         assert response.json == []
