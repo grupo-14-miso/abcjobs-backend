@@ -86,7 +86,7 @@ def test_post_request_interview(mock_datastore_client, client):
     mock_client_instance.query.return_value.fetch.return_value = mock_pre_interview_results
 
 
-    response = client.post("/interview", json=test_data)
+    response = client.post("/interviews", json=test_data)
 
     # Assertions
     assert response.status_code == 200
@@ -110,7 +110,7 @@ def test_get_request_interview(mock_datastore_client, client):
 
     # Assuming this line raises a TypeError
     with pytest.raises(TypeError) as exc_info:
-        response = client.get("/interview")
+        response = client.get("/interviews")
 
     # You can then assert details about the exception, for example:
     assert "Object of type MagicMock is not JSON serializable" in str(exc_info.value)
