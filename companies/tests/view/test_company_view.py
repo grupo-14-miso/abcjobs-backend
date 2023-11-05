@@ -18,7 +18,6 @@ def test_ping(client):
         assert response_valid.json == "Pong"
 
 
-
 def test_get_companies(client):
         # Perform get request to offer
         response = client.get("/companies")
