@@ -25,7 +25,6 @@ api.add_resource(OfferByCompanyView, "/companies/offer/<string:company_id>")
 api.add_resource(CompanyView, "/companies")
 
 
-
 cors = CORS(app)
 app_context = app.app_context()
 app_context.push()
