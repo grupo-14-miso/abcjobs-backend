@@ -19,7 +19,7 @@ coverage = "*"
 pytest-cov = "*"
 google-cloud-pubsub = "*"
 exceptiongroup = "*"
-
+newrelic = "*"
 [dev-packages]
 
 [requires]
