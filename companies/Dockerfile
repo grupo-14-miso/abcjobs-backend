@@ -19,4 +19,4 @@ ENV NEW_RELIC_APP_NAME=companies
 # Expose port for companies microservice
 EXPOSE 3002
 
-CMD ["pipenv", "run", "python", "main.py"]
+CMD ["pipenv", "run", "newrelic-admin", "run-program", "run", "python", "main.py"]

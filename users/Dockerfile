@@ -24,6 +24,3 @@ EXPOSE 3000
 
 
 CMD ["pipenv", "run", "newrelic-admin", "run-program", "python", "src/main.py"]
-
-
-
