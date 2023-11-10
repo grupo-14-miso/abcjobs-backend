@@ -372,7 +372,7 @@
                 "sha256:5368a4502b793d9bbf812a5912e13e4e69f9bd87f6efb508460c43f5bbd1ce41",
                 "sha256:de2fb50ed34d47ddbb2bd2dcf680ee8fead46279f4ed6b16de362aca23a18952"
             ],
-            "markers": "python_version >= '3.7'",
+            "markers": "platform_python_implementation != 'PyPy'",
             "version": "==2.14.0"
         },
         "google-api-python-client": {
