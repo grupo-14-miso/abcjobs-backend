@@ -17,6 +17,7 @@ google-cloud-datastore = "*"
 httmock = "*"
 coverage = "*"
 pytest-cov = "*"
+newrelic = "*"
 
 [dev-packages]
 
