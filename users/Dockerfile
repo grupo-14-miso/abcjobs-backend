@@ -16,8 +16,12 @@ COPY Pipfile.lock .
 COPY . .
 
 RUN pipenv install --deploy --ignore-pipfile
-
+# Install New Relic agent
+RUN pip install newrelic
+ENV NEW_RELIC_LICENSE_KEY=2871e7153e4b28d60f1c6941c6522eedFFFFNRAL
+ENV NEW_RELIC_APP_NAME=users
 # Expose port for users microservice
 EXPOSE 3000
 
-CMD ["pipenv", "run", "python", "src/main.py"]
+CMD ["newrelic-admin", "run-program", "pipenv", "run", "python", "src/main.py"]
+
