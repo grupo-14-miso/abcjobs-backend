@@ -1,5 +1,6 @@
 from flask_jwt_extended import create_access_token
 from google.cloud import datastore
+
 candidates_entity = 'candidates'
 companies_entity = 'companies-data'
 users_entity = 'abcjobs-users'
@@ -18,7 +19,6 @@ def get_entity_by_email(entity, email):
         return results.pop()
     except:
         return None
-
 
 
 def auth_admin_user(email, password):
