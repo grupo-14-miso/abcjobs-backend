@@ -9,12 +9,15 @@ firebase_admin = MagicMock()
 firebase_admin.initialize_app.return_value = None
 salt, pw_hash = hash_new_password('chocoB0wser')
 
+
 @pytest.fixture
 def client():
     with patch('main.firebase_admin', firebase_admin):
         with patch('google.auth.default', return_value=(None, None)):  # Mock GCP authentication
             with patch('google.cloud.datastore.Client', autospec=True):  # Mock Datastore Client
-                with patch('src.utils.auth.get_entity_by_email', return_value={'salt': salt, 'password_hash': pw_hash, 'first_name': '1', 'last_name': '2', 'name':'3', 'Nombre': '1', 'apellido':'2'}):
+                with patch('src.utils.auth.get_entity_by_email',
+                           return_value={'salt': salt, 'password_hash': pw_hash, 'first_name': '1', 'last_name': '2',
+                                         'name': '3', 'Nombre': '1', 'apellido': '2'}):
                     with app.test_client() as client:
                         yield client
 
@@ -181,7 +184,6 @@ def test_post_failed_400(client):
 
     # Assertions
     assert status_code == 400
-
 
 
 def test_login_admin_user(client):
