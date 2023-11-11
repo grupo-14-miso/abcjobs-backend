@@ -16,8 +16,10 @@ COPY Pipfile.lock .
 COPY . .
 
 RUN pipenv install --deploy --ignore-pipfile
+ENV NEW_RELIC_LICENSE_KEY=2871e7153e4b28d60f1c6941c6522eedFFFFNRAL
+ENV NEW_RELIC_APP_NAME=assignments
 
 # Expose port for users microservice
 EXPOSE 3001
 
-CMD ["pipenv", "run", "python", "src/main.py"]
+CMD ["pipenv", "run", "newrelic-admin", "run-program", "python", "src/main.py"]
