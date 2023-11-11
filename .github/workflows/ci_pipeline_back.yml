@@ -62,6 +62,7 @@ jobs:
       - name: Apply deployment
         working-directory: ./deployment
         run: |
+          kubectl delete -f public.yaml
           kubectl apply -f public.yaml
           kubectl apply -f ingress.yaml
 
