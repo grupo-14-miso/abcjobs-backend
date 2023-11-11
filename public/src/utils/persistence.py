@@ -36,7 +36,7 @@ def persist_new_admin_user(data, pw_hash, salt, created_date):
     users_ref = datastore.Entity(key=key)
     users_ref.update(new_user)
     client.put(users_ref)
-    return new_user
+    return str(users_ref.id)
 
 
 def persist_new_company(data, pw_hash, salt, created_date):

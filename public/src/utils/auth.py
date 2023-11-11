@@ -7,18 +7,22 @@ users_entity = 'abcjobs-users'
 from src.utils.utils import is_correct_password, get_expiration_datetime
 
 
-def auth_admin_user(email, password):
+def get_entity_by_email(entity, email):
     # Initialize the Datastore client
     client = datastore.Client()
 
     # Query all Users
-    query = client.query(kind=users_entity).add_filter('email', '=', email)
+    query = client.query(kind=entity).add_filter('email', '=', email)
     results = list(query.fetch())
-
     try:
-        usuario = results.pop()
+        return results.pop()
     except:
-        usuario = None
+        return None
+
+
+
+def auth_admin_user(email, password):
+    usuario = get_entity_by_email(users_entity, email)
     if usuario is not None:
         salt = usuario.get('salt')
         pw_hash = usuario.get('password_hash')
@@ -38,17 +42,8 @@ def auth_admin_user(email, password):
 
 
 def auth_candidate(email, password):
-    # Initialize the Datastore client
-    client = datastore.Client()
+    candidate = get_entity_by_email(candidates_entity, email)
 
-    # Query all Candidates
-    query = client.query(kind=candidates_entity).add_filter('email', '=', email)
-    results = list(query.fetch())
-
-    try:
-        candidate = results.pop()
-    except:
-        candidate = None
     if candidate is not None:
         salt = candidate.get('salt')
         pw_hash = candidate.get('password_hash')
@@ -68,17 +63,7 @@ def auth_candidate(email, password):
 
 
 def auth_company(email, password):
-    # Initialize the Datastore client
-    client = datastore.Client()
-
-    # Query all Candidates
-    query = client.query(kind=companies_entity).add_filter('email', '=', email)
-    results = list(query.fetch())
-
-    try:
-        company = results.pop()
-    except:
-        company = None
+    company = get_entity_by_email(companies_entity, email)
     if company is not None:
         salt = company.get('salt')
         pw_hash = company.get('password_hash')
