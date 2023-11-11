@@ -20,13 +20,23 @@ spec:
       containers:
         - name: public
           image: gcr.io/abc-jobs-miso/public:1.0
-          #env:
+          env:
+            - name: GOOGLE_APPLICATION_CREDENTIALS
+              value: /etc/credentials/credentials.json
+          volumeMounts:
+            - name: service-account-credentials
+              mountPath: "/etc/credentials"
+              readOnly: true
           ports:
             - containerPort: 3005
           # Realizar pull siempre a la imagen
           imagePullPolicy: Always
       imagePullSecrets:
         - name: gcr-access-token
+      volumes:
+        - name: service-account-credentials
+          secret:
+            secretName: service-account-credentials
 
 ---
 #apiVersion: cloud.google.com/v1
