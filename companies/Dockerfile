@@ -10,7 +10,7 @@ WORKDIR $PROJECT_DIR
 # Copy files to docker image
 COPY Pipfile .
 COPY Pipfile.lock .
-COPY newrelic.ini
+COPY newrelic.ini .
 COPY . .
 
 RUN pipenv install --deploy --ignore-pipfile

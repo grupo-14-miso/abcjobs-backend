@@ -9,7 +9,6 @@ on:
     paths:
       - 'public/**'
 
-
 env: 
   PROJECT_ID: abc-jobs-miso
   CLUSTER_NAME: primary
