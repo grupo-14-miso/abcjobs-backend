@@ -1,5 +1,3 @@
-import os
-import uuid
 from datetime import datetime
 from flask_restful import Resource
 from flask import request
@@ -7,8 +5,6 @@ from flask import request
 from src.utils.auth import auth_admin_user, auth_candidate, auth_company
 from src.utils.persistence import persist_new_admin_user, persist_new_candidate, persist_new_company
 from src.utils.utils import hash_new_password, get_datetime_iso_format
-
-
 
 
 class VistaPing(Resource):
@@ -61,5 +57,3 @@ class VistaLogIn(Resource):
             return auth_candidate(email, password)
         elif role == 'Company':
             return auth_company(email, password)
-
-
