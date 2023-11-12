@@ -1,4 +1,3 @@
-import os
 from datetime import datetime
 
 from src.utils.utils import hash_new_password, is_correct_password, get_datetime_iso_format, get_expiration_datetime
