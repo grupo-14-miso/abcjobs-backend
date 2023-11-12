@@ -4,7 +4,7 @@ name: CI/CD Pipeline Load Test
 
 on:
   workflow_run:
-    workflows: [CI/CD Pipeline Back]
+    workflows: [CI/CD Pipeline Public]
     types:
       - completed
 
