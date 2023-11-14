@@ -223,6 +223,11 @@ class AssignmentTemplateCandidate(Resource):
         query.add_filter('candidate', '=', candidate_key)
         results = query.fetch()
         
+        status = request.args.getlist('status')
+
+
+        if status:
+            query.add_filter('status', 'IN', status)
         
 
         assignments = []
