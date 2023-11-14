@@ -21,6 +21,12 @@ def get_entity_by_email(entity, email):
         return None
 
 
+def get_id_of_entity(entity):
+    try:
+        return entity.id
+    except:
+        return 0
+
 def auth_admin_user(email, password):
     usuario = get_entity_by_email(users_entity, email)
     if usuario is not None:
@@ -31,7 +37,7 @@ def auth_admin_user(email, password):
             token = create_access_token(identity=user_id)
             expiration_date = get_expiration_datetime()
             return {"id": user_id,
-                    "key": usuario.id,
+                    "key": get_id_of_entity(usuario),
                     "token": token,
                     "expireAt": expiration_date,
                     "role": usuario.get('role'),
@@ -53,7 +59,7 @@ def auth_candidate(email, password):
             token = create_access_token(identity=id_candidato)
             expiration_date = get_expiration_datetime()
             return {"id": id_candidato,
-                    "key": candidate.id,
+                    "key": get_id_of_entity(candidate),
                     "token": token,
                     "expireAt": expiration_date,
                     "role": 'Candidate',
@@ -74,7 +80,7 @@ def auth_company(email, password):
             token = create_access_token(identity=company_id)
             expiration_date = get_expiration_datetime()
             return {"id": company_id,
-                    "key": company.id,
+                    "key": get_id_of_entity(company),
                     "token": token,
                     "expireAt": expiration_date,
                     "role": 'Company',
