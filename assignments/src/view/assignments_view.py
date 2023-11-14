@@ -10,6 +10,7 @@ from google.cloud import pubsub_v1
 import json
 
 assigments_entity='assignments-data'
+assigments_template_entity='assignments-template-data'
 
 class VistaPing(Resource): 
     def get(self):
@@ -30,7 +31,7 @@ class AssignmentsView(Resource):
         # Initialize the Datastore client
         client = datastore.Client()
 
-        key = client.key(assigments_entity)
+        key = client.key(assigments_template_entity)
         assignments_ref = datastore.Entity(key=key)
 
         # Build the assignment data
@@ -57,12 +58,17 @@ class AssignmentsView(Resource):
         client = datastore.Client()
 
         # Query all assignments
-        query = client.query(kind=assigments_entity)
+        query = client.query(kind=assigments_template_entity)
         
         status = request.args.getlist('status')
 
+        type = request.args.getlist('type')
+
         if status:
             query.add_filter('status', 'IN', status)
+        
+        if type:
+            query.add_filter('type', 'IN', type)
         
         results = query.fetch()
         
@@ -193,3 +199,19 @@ class QuestionnaireView(Resource):
         
         print(f"test finished {assignment_id}")
         return {'message': 'Assignment completed'}, 201
+
+class AssignmentTemplateCandidate(Resource):
+    def post(self,assignment_template_id, candidate_key ):
+         # Initialize the Datastore client
+        client = datastore.Client()
+        key = client.key(assigments_template_entity, int(assignment_template_id))
+        assignment_data = client.get(key)
+        assignment_data['candidate'] = candidate_key
+
+        key_assigment = client.key(assigments_entity)
+        assignments_ref = datastore.Entity(key=key_assigment)
+
+        assignments_ref.update(assignment_data)
+        client.put(assignments_ref)
+
+        return "Success", 200
