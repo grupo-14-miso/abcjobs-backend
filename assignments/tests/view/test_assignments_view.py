@@ -18,6 +18,11 @@ firebase_admin.db.reference.return_value.get.return_value = [
         }
 ]
 
+assignment_data_mock = {
+    'candidate': 'mocked_candidate_key',
+    'other_data': 'mocked_other_data'
+}
+
 # Mock the Pub/Sub client
 pubsub_client = MagicMock()
 
@@ -43,7 +48,7 @@ def test_ping(client):
 
 def test_get_assignments( client):
     # Perform a GET request to /assignments
-    response = client.get('/assignments')
+    response = client.get('/assignments?status=tsts&type=hdhdh')
 
     # Validate the response
     assert response.status_code == 200
@@ -182,3 +187,18 @@ def test_update_assignment_with_question(mock_firestore_client, client):
     print(response.json)
 
 
+@pytest.fixture
+def mock_datastore_client():
+    with patch('google.cloud.datastore.Client') as mock_client:
+        mock_instance = mock_client.return_value
+        mock_instance.get.return_value = assignment_data_mock
+        yield mock_instance
+
+
+def test_assignment_template_candidate_post(client, mock_datastore_client):
+    # Perform a POST request to /assignment_template_candidate
+
+    response = client.post('/assignments/candidate/123/some_candidate_key')
+
+    # Validate the response
+    assert response.status_code == 200
