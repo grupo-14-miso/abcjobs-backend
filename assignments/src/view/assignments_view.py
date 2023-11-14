@@ -215,3 +215,27 @@ class AssignmentTemplateCandidate(Resource):
         client.put(assignments_ref)
 
         return "Success", 200
+
+    def get(sefl, candidate_key):
+        # Initialize the Datastore client
+        client = datastore.Client()
+        query = client.query(kind=assigments_entity)
+        query.add_filter('candidate', '=', candidate_key)
+        results = query.fetch()
+        
+        
+
+        assignments = []
+        for entity in results:
+            assignment_data = {
+                'assignment_id': entity.id,
+                'rol': entity['rol'],
+                'type': entity['type'],
+                'focus': entity['focus'],
+                'questions': entity['questions'],
+                'status': entity['status'],
+                'result': entity['result']
+            }
+            assignments.append(assignment_data)
+
+        return jsonify(assignments)

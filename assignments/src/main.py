@@ -29,7 +29,8 @@ api.add_resource(VistaPing, "/assignments/ping")
 api.add_resource(AssignmentsView, "/assignments")
 api.add_resource(AssignmentSubmissionView, "/assignments/<string:assignment_id>", resource_class_kwargs={'publisher': publisher, 'topic_path': topic_path})
 api.add_resource(QuestionnaireView, "/assignments/questionnaire/<string:assignment_id>")
-api.add_resource(AssignmentTemplateCandidate, "/assignments/candidate/<string:assignment_template_id>/<string:candidate_key>")
+api.add_resource(AssignmentTemplateCandidate, "/assignments/candidate/<string:assignment_template_id>/<string:candidate_key>", "/assignments/candidate/<string:candidate_key>")
+
 
 
 
