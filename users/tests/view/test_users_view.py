@@ -1,6 +1,6 @@
 from unittest.mock import patch, MagicMock
 import pytest
-from src.main import app
+from main import app
 
 # Mock firebase_admin for tests
 firebase_admin = MagicMock()
@@ -16,7 +16,7 @@ firebase_admin.db.reference.return_value.get.return_value = {
 # Mock the Flask client
 @pytest.fixture
 def client():
-    with patch('src.main.firebase_admin', firebase_admin):
+    with patch('main.firebase_admin', firebase_admin):
         with patch('google.auth.default', return_value=(None, None)):  # Mock GCP authentication
             with patch('google.cloud.datastore.Client', autospec=True):  # Mock Datastore Client
                 with app.test_client() as client:

@@ -23,4 +23,4 @@ ENV NEW_RELIC_APP_NAME=users
 EXPOSE 3000
 
 
-CMD ["pipenv", "run", "newrelic-admin", "run-program", "python", "src/main.py"]
+CMD ["pipenv", "run", "newrelic-admin", "run-program", "python", "main.py"]
