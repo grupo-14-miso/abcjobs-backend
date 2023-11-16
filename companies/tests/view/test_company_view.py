@@ -58,3 +58,23 @@ def test_post_offer(client):
     response = client.post('/companies/offer', json=data)
     # Validate the response
     assert response.status_code == 201
+
+
+def test_post_candidate_to_equipo(client):
+    data = {
+        "offer_id": "5726177821982720",
+        "candidate_id": "4754793658580992",
+        "tipo": "interno/externo",
+        "rol": "Key Developer",
+        "nombre": "Jose Luis Garay"
+    }
+    response = client.post('/companies/equipo', json=data)
+    # Validate the response
+    assert response.status_code == 201
+
+def test_get_equipo_from_offer(client):
+    # Perform get request to offer
+    response = client.get("/companies/equipo/123456")
+    # Validate the response
+    assert response.status_code == 200
+    assert response.json == []
