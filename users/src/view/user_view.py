@@ -4,7 +4,9 @@ from flask import jsonify
 from google.cloud import datastore
 import uuid
 
+from src.utils.utils import get_entity_by_field, update_entity
 
+candidates_domain = 'candidates'
 class VistaPing(Resource):
     def get(self):
         return "Pong"
@@ -191,3 +193,62 @@ class VistaUsers(Resource):
             })
 
         return jsonify(user_profiles)
+
+
+class VistaUserUpdate(Resource):
+    def put(self, tab_to_update):
+        # Initialize the Datastore client
+        client = datastore.Client()
+        # Get data from the request
+        data = request.get_json()
+        id_candidato = data.get('id_candidato', '')
+        # Obtener entidad
+        candidate = get_entity_by_field(candidates_domain, 'id_candidato', id_candidato)
+
+        # Datos personales
+        if 'personal' == tab_to_update:
+            update_entity(candidate, {
+                'email': data.get('email', ''),
+                'Nombre': data.get('Nombre', ''),
+                'apellido': data.get('apellido', ''),
+                'segundo_nombre': data.get('segundo_nombre', ''),
+                'segundo_apellido': data.get('segundo_apellido', ''),
+                'tipo_documento': data.get('tipo_documento', ''),
+                'documento': data.get('documento', ''),
+                'fecha_nacimiento': data.get('fecha_nacimiento', ''),
+                'genero': data.get('genero', ''),
+                'nacionalidad': data.get('nacionalidad', ''),
+                'estado_civil': data.get('estado_civil', ''),
+                'telefono': data.get('telefono', ''),
+                'pais_nacimiento': data.get('pais_nacimiento', ''),
+                'pais_residencia': data.get('pais_residencia', ''),
+                'ciudad_nacimiento': data.get('ciudad_nacimiento', ''),
+                'ciudad_residencia': data.get('ciudad_residencia', ''),
+                'lenguajes_programacion': data.get('lenguajes_programacion', []),
+                'tecnologias_herramientas': data.get('tecnologias_herramientas', []),
+                'rol': data.get('rol', []),
+                # Add more fields as needed
+            })
+
+
+        # Educación
+        if 'education' == tab_to_update:
+            update_entity(candidate, {
+                'educacion': data.get('educacion', []),
+            })
+        # Experiencia
+        if 'experiencia' == tab_to_update:
+            update_entity(candidate, {
+                'experiencia': data.get('experiencia', [])
+            })
+        # Idiomas
+        if 'idiomas' == tab_to_update:
+            update_entity(candidate, {
+                'idiomas': data.get('idiomas', []),
+            })
+
+        # Persistir
+        client.put(candidate)
+        return {'message': 'User updated successfully'}, 200
+
+
