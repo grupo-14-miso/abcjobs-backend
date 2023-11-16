@@ -10,6 +10,7 @@ from firebase_admin import credentials
 from src.view.user_view import VistaPing, VistaUserUpdate
 from src.view.user_view import VistaUserProfile
 from src.view.user_view import VistaUsers
+from src.view.user_view import VistaCandidatos
 
 app = Flask(__name__)
 
@@ -24,6 +25,7 @@ api.add_resource(VistaUsers, "/users")
 api.add_resource(VistaPing, "/users/ping")
 api.add_resource(VistaUserProfile, "/users/profiles")
 api.add_resource(VistaUserUpdate, "/users/<string:tab_to_update>/update")
+api.add_resource(VistaCandidatos, "/users/<string:id_candidate>")
 
 
 cors = CORS(app)

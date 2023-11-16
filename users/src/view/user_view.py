@@ -11,6 +11,41 @@ class VistaPing(Resource):
     def get(self):
         return "Pong"
 
+class VistaCandidatos(Resource): 
+    def get(self, id_candidate):
+
+        client = datastore.Client()
+        key_candidate = client.key('candidates', int(id_candidate))
+
+        candidate = client.get(key_candidate)
+
+        return {
+                'key': candidate.key.path[-1],
+                'id_candidato': candidate['id_candidato'],
+                'email': candidate['email'],
+                'Nombre': candidate['Nombre'],
+                'apellido': candidate['apellido'],
+                'segundo_nombre': candidate['segundo_nombre'],
+                'segundo_apellido': candidate['segundo_apellido'],
+                'tipo_documento': candidate['tipo_documento'],
+                'documento': candidate['documento'],
+                'fecha_nacimiento': candidate['fecha_nacimiento'],
+                'genero': candidate['genero'],
+                'nacionalidad': candidate['nacionalidad'],
+                'estado_civil': candidate['estado_civil'],
+                'telefono': candidate['telefono'],
+                'pais_nacimiento': candidate['pais_nacimiento'],
+                'pais_residencia': candidate['pais_residencia'],
+                'ciudad_nacimiento': candidate['ciudad_nacimiento'],
+                'ciudad_residencia': candidate['ciudad_residencia'],
+                'lenguajes_programacion': candidate['lenguajes_programacion'],
+                'tecnologias_herramientas': candidate['tecnologias_herramientas'],
+                'educacion': candidate['educacion'],
+                'experiencia': candidate['experiencia'],
+                'idiomas': candidate['idiomas'],
+                'rol':candidate['rol']
+            }
+        
 
 class VistaUserProfile(Resource):
     def get(self):
