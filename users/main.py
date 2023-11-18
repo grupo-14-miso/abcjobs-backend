@@ -7,7 +7,7 @@ from flask_restful import Api
 import firebase_admin
 from firebase_admin import credentials
 
-from src.view.user_view import VistaPing, VistaUserUpdate
+from src.view.user_view import VistaPing, VistaUserUpdate, VistaCandidatosReady
 from src.view.user_view import VistaUserProfile
 from src.view.user_view import VistaUsers
 from src.view.user_view import VistaCandidatos
@@ -26,6 +26,7 @@ api.add_resource(VistaPing, "/users/ping")
 api.add_resource(VistaUserProfile, "/users/profiles")
 api.add_resource(VistaUserUpdate, "/users/<string:tab_to_update>/update")
 api.add_resource(VistaCandidatos, "/users/<string:id_candidate>")
+api.add_resource(VistaCandidatosReady, "/users/ready")
 
 
 cors = CORS(app)

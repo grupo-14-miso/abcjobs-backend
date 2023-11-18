@@ -212,3 +212,9 @@ def test_update_user_idiomas(client):
     assert 'message' in response.json
 
 
+def test_get_users_ready(client):
+    # Perform get request to users ready
+    response = client.get('/users/ready')
+    assert response.status_code == 200
+
+

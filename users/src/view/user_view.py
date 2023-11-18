@@ -4,9 +4,10 @@ from flask import jsonify
 from google.cloud import datastore
 import uuid
 
-from src.utils.utils import get_entity_by_field, update_entity
+from src.utils.utils import get_entity_by_field, update_entity, get_results_from_entity
 
 candidates_domain = 'candidates'
+assignments_domain = 'assignments-data'
 class VistaPing(Resource):
     def get(self):
         return "Pong"
@@ -286,4 +287,31 @@ class VistaUserUpdate(Resource):
         client.put(candidate)
         return {'message': 'User updated successfully'}, 200
 
+
+class VistaCandidatosReady(Resource):
+    def get(self):
+        required_complete_assignments = ['Technical', 'Performance', 'Language', 'Psychotechnical']
+        candidates_ready = []
+        # Get Candidates
+        candidates = get_results_from_entity(candidates_domain)
+        # Get Assignments
+        assignments = get_results_from_entity(assignments_domain)
+        # Validate completion of all types
+        for candidate in candidates:
+            candidate_completed_assignments = []
+            for assignment in assignments:
+                assignment_candidate = assignment.get('candidate')
+                status = assignment.get('status')
+                assignment_type = assignment.get('type')
+                if assignment_candidate == candidate.id and status == 'finished' and assignment_type \
+                        not in candidate_completed_assignments and assignment_type in required_complete_assignments:
+                    candidate_completed_assignments.append(assignment_type)
+            if len(candidate_completed_assignments) >= 4:
+                candidates_ready.append({
+                "id": candidate.id,
+                "id_candidato": candidate.get('id_candidato'),
+                "name": candidate.get('Nombre', '') + candidate.get('apellido', '')
+            })
+
+        return candidates_ready
 
