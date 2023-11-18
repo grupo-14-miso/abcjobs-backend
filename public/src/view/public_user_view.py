@@ -27,12 +27,15 @@ class VistaSignUp(Resource):
         salt, pw_hash = hash_new_password(password)
         today = datetime.now()
         created_date = get_datetime_iso_format(today)
+        new_user = None
         if role == 'Admin':
             new_user = persist_new_admin_user(data, pw_hash, salt, created_date)
         if role == 'Candidate':
             new_user = persist_new_candidate(data, pw_hash, salt)
-        elif role == 'Company':
+        if role == 'Company':
             new_user = persist_new_company(data, pw_hash, salt, created_date)
+        if new_user == 0:
+            return {'message': role + ' already exists'}, 400
         return {
                    "accountCreated": new_user,
                    "createdAt": created_date,
