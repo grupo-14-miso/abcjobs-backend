@@ -14,6 +14,15 @@ def get_entity_by_field(entity, field_name, field_value):
         return None
 
 
+def get_results_from_entity(entity):
+    # Initialize the Datastore client
+    client = datastore.Client()
+    # Query all results
+    query = client.query(kind=entity)
+    results = query.fetch()
+    return list(results)
+
+
 def update_entity(entity, new_value):
     try:
         entity.update(new_value)
