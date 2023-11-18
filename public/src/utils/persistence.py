@@ -1,13 +1,21 @@
 import uuid
 from google.cloud import datastore
 
+from src.utils.auth import get_entity_by_email
 
 users_entity = 'abcjobs-users'
 companies_entity = 'companies-data'
 candidates_entity = 'candidates'
 
 
+def user_exists(entity, email):
+    result = get_entity_by_email(entity, email)
+    return result is not None
+
+
 def persist_new_admin_user(data, pw_hash, salt, created_date):
+    if user_exists(users_entity, data.get('email')):
+        return 0
     new_user = {
         "user_id": str(uuid.uuid4()),
         "username": data.get("username", ""),
@@ -40,6 +48,8 @@ def persist_new_admin_user(data, pw_hash, salt, created_date):
 
 
 def persist_new_company(data, pw_hash, salt, created_date):
+    if user_exists(companies_entity, data.get('email')):
+        return 0
     new_company = {
         "company_id": str(uuid.uuid4()),
         "password_hash": pw_hash,
@@ -64,6 +74,8 @@ def persist_new_company(data, pw_hash, salt, created_date):
 
 
 def persist_new_candidate(data, pw_hash, salt):
+    if user_exists(candidates_entity, data.get('email')):
+        return 0
     new_candidate = {
         'id_candidato': str(uuid.uuid4()),
         "password_hash": pw_hash,
@@ -101,4 +113,3 @@ def persist_new_candidate(data, pw_hash, salt):
     candidate.update(new_candidate)
     client.put(candidate)
     return str(candidate.id)
-
