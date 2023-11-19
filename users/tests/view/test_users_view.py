@@ -1,6 +1,9 @@
-from unittest.mock import patch, MagicMock
+from unittest.mock import patch, MagicMock, Mock
+
+import google.cloud.datastore
 import pytest
 from main import app
+from src.utils.utils import get_results_from_entity
 
 # Mock firebase_admin for tests
 firebase_admin = MagicMock()
@@ -216,5 +219,26 @@ def test_get_users_ready(client):
     # Perform get request to users ready
     response = client.get('/users/ready')
     assert response.status_code == 200
+
+
+@patch('google.cloud.datastore.Client')
+def test_get_results_from_entity(mock_datastore_client, client):
+    # Create a mock instance for the Datastore client
+    mock_client = Mock()
+    mock_datastore_client.return_value = mock_client
+
+    # Define your mock results
+    mock_results = [Mock(), Mock(), Mock()]
+
+    # Mock the fetch method of the query object
+    mock_query = mock_client.query.return_value
+    mock_query.fetch.return_value = mock_results
+
+    # Call the method with your mock values
+    result = get_results_from_entity("your_entity")
+    client.get('/users/ready')
+
+    # Assert that the method returned the expected result
+    assert result == mock_results
 
 

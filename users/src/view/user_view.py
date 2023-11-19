@@ -299,18 +299,19 @@ class VistaCandidatosReady(Resource):
         # Validate completion of all types
         for candidate in candidates:
             candidate_completed_assignments = []
+            candidate_id = str(candidate.id)
             for assignment in assignments:
                 assignment_candidate = assignment.get('candidate')
                 status = assignment.get('status')
                 assignment_type = assignment.get('type')
-                if assignment_candidate == candidate.id and status == 'finished' and assignment_type \
+                if assignment_candidate == candidate_id and status == 'finished' and assignment_type \
                         not in candidate_completed_assignments and assignment_type in required_complete_assignments:
                     candidate_completed_assignments.append(assignment_type)
             if len(candidate_completed_assignments) >= 4:
                 candidates_ready.append({
                 "id": candidate.id,
                 "id_candidato": candidate.get('id_candidato'),
-                "name": candidate.get('Nombre', '') + candidate.get('apellido', '')
+                "name": candidate.get('Nombre', '') + ' ' + candidate.get('apellido', '')
             })
 
         return candidates_ready
