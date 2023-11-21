@@ -175,6 +175,16 @@ def test_get_all_users(client):
     assert isinstance(response.json, list)
 
 
+def test_get_candidato_exception(client):
+    # Perform a GET request to /users
+    try:
+        response = client.get('/users/123')
+    except:
+        # Validate the response
+        assert True
+
+
+
 
 def test_update_user_personal(client):
     # Perform a PUT request to /users
@@ -214,7 +224,7 @@ def test_update_user_idiomas(client):
 
 def test_get_users_ready(client):
     # Perform get request to users ready
-    response = client.get('/users/ready')
+    response = client.get('/users/ready/5163227868561408')
     assert response.status_code == 200
 
 

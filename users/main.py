@@ -26,7 +26,7 @@ api.add_resource(VistaPing, "/users/ping")
 api.add_resource(VistaUserProfile, "/users/profiles")
 api.add_resource(VistaUserUpdate, "/users/<string:tab_to_update>/update")
 api.add_resource(VistaCandidatos, "/users/<string:id_candidate>")
-api.add_resource(VistaCandidatosReady, "/users/ready")
+api.add_resource(VistaCandidatosReady, "/users/ready/<string:id_offer>")
 
 
 cors = CORS(app)

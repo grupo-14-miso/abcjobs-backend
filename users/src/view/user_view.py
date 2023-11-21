@@ -4,10 +4,11 @@ from flask import jsonify
 from google.cloud import datastore
 import uuid
 
-from src.utils.utils import get_entity_by_field, update_entity, get_results_from_entity
+from src.utils.utils import get_entity_by_field, update_entity, get_results_from_entity, get_entities_by_field
 
 candidates_domain = 'candidates'
 assignments_domain = 'assignments-data'
+pre_interview_domain = 'pre_interview'
 class VistaPing(Resource):
     def get(self):
         return "Pong"
@@ -262,6 +263,7 @@ class VistaUserUpdate(Resource):
                 'ciudad_residencia': data.get('ciudad_residencia', ''),
                 'lenguajes_programacion': data.get('lenguajes_programacion', []),
                 'tecnologias_herramientas': data.get('tecnologias_herramientas', []),
+                'soft_skill': data.get('soft_skill', []),
                 'rol': data.get('rol', []),
                 # Add more fields as needed
             })
@@ -289,9 +291,15 @@ class VistaUserUpdate(Resource):
 
 
 class VistaCandidatosReady(Resource):
-    def get(self):
+    def get(self, id_offer):
         required_complete_assignments = ['Technical', 'Performance', 'Language', 'Psychotechnical']
         candidates_ready = []
+        # Get Pre Interviews By Offer
+        pre_interwiews = get_entities_by_field(pre_interview_domain, 'id_offer', id_offer)
+        candidates_on_pre_interview = []
+        for pre_interwiew in pre_interwiews:
+            candidates_on_pre_interview.append(pre_interwiew.get('id_candidate'))
+
         # Get Candidates
         candidates = get_results_from_entity(candidates_domain)
         # Get Assignments
@@ -303,7 +311,7 @@ class VistaCandidatosReady(Resource):
                 assignment_candidate = assignment.get('candidate')
                 status = assignment.get('status')
                 assignment_type = assignment.get('type')
-                if assignment_candidate == candidate.id and status == 'finished' and assignment_type \
+                if assignment_candidate == str(candidate.id) and str(candidate.id) in candidates_on_pre_interview and status == 'finished' and assignment_type \
                         not in candidate_completed_assignments and assignment_type in required_complete_assignments:
                     candidate_completed_assignments.append(assignment_type)
             if len(candidate_completed_assignments) >= 4:
