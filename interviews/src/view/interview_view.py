@@ -165,3 +165,17 @@ class VistaInterview(Resource):
             all_interview_details.append(interview_details)
 
         return jsonify(all_interview_details)
+
+class VistaInterviewResult(Resource):
+    def post(sefl, id_interview):
+        client = datastore.Client()
+        data = request.get_json()
+        result = data['result']
+        key = client.key(interviews_domain, int(id_interview))
+
+        interview = client.get(key)
+        interview['result'] = result
+        interview_ref = datastore.Entity(key=key)
+        interview_ref.update(interview)
+        client.put(interview_ref)
+        return {'message': 'Interviw updated'}, 201
