@@ -77,17 +77,18 @@ class VistaValidate(Resource):
             path = request.headers.get('Another-Original-Uri', request.path)
 
         
-        logger.info("Request Method:", request.method)
-        logger.info("Request Path:", request.path)
-        logger.info("Request Full Path:", request.full_path)
-        logger.info("Request URI:", request.url)
-        logger.info("Request Headers:", request.headers)
-        logger.info("Request JSON Data:", request.json if request.is_json else None)
-        logger.info("Request Form Data:", request.form if request.form else None)
+        #logger.info("Request Method:", request.method)
+        #logger.info("Request Path:", request.path)
+        #logger.info("Request Full Path:", request.full_path)
+        #logger.info("Request URI:", request.url)
+        #logger.info("Request Headers:", request.headers)
+        #logger.info("Request JSON Data:", request.json if request.is_json else None)
+        #logger.info("Request Form Data:", request.form if request.form else None)
 
 
-
+        logger.info(f"Before if statement - Path: {path}, Token: {token}")
         if "/public/register" in path or "/public/login" in path:
+            logger.info("validation skipped")
             return {"status": "ok", "message": "Special path accessed."}, 200
         elif token and self.validate_token_function(token):
             return {"status": "success", "message": "Token is valid. Access granted."}, 200
