@@ -202,3 +202,21 @@ def test_assignment_template_candidate_post(client, mock_datastore_client):
 
     # Validate the response
     assert response.status_code == 200
+
+def test_assignment_perfomance_test(client, mock_datastore_client):
+    # Perform a POST request to /assignment_template_candidate
+
+    response = client.get('assignments/company/5726177821982720')
+
+    # Validate the response
+    assert response.status_code == 200
+
+def test_assignment_by_candidate_test(client, mock_datastore_client):
+    # Perform a POST request to /assignment_template_candidate
+
+    response = client.get('assignments/candidate/5705491514654720?status=finished')
+
+    # Validate the response
+    assert response.status_code == 200
+
+
