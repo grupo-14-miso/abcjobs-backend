@@ -6,7 +6,10 @@ from flask import request, jsonify
 from src.utils.auth import auth_admin_user, auth_candidate, auth_company
 from src.utils.persistence import persist_new_admin_user, persist_new_candidate, persist_new_company
 from src.utils.utils import hash_new_password, get_datetime_iso_format
+import logging
 
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 class VistaPing(Resource):
     def get(self):
@@ -66,18 +69,21 @@ class VistaValidate(Resource):
     def post(self):
         token = request.headers.get('Authorization')
         path = request.headers.get('X-Original-Uri')
+        
+        logger.info("This is an info log message.")
+        logger.info(path)
         if not path:
             # If X-Original-Uri is not present, tgitry other headers or fallback to request.path
             path = request.headers.get('Another-Original-Uri', request.path)
 
         
-        print("Request Method:", request.method)
-        print("Request Path:", request.path)
-        print("Request Full Path:", request.full_path)
-        print("Request URI:", request.url)
-        print("Request Headers:", request.headers)
-        print("Request JSON Data:", request.json if request.is_json else None)
-        print("Request Form Data:", request.form if request.form else None)
+        logger.info("Request Method:", request.method)
+        logger.info("Request Path:", request.path)
+        logger.info("Request Full Path:", request.full_path)
+        logger.info("Request URI:", request.url)
+        logger.info("Request Headers:", request.headers)
+        logger.info("Request JSON Data:", request.json if request.is_json else None)
+        logger.info("Request Form Data:", request.form if request.form else None)
 
 
 
