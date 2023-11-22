@@ -65,6 +65,8 @@ class VistaLogIn(Resource):
 class VistaValidate(Resource):
     def post(self):
         token = request.headers.get('Authorization')
+        path = request.path
+        
         print("Request Method:", request.method)
         print("Request Path:", request.path)
         print("Request Full Path:", request.full_path)
@@ -72,7 +74,12 @@ class VistaValidate(Resource):
         print("Request Headers:", request.headers)
         print("Request JSON Data:", request.json if request.is_json else None)
         print("Request Form Data:", request.form if request.form else None)
-        if token and self.validate_token_function(token):
+
+
+
+        if "/public/register" in path or "/public/login" in path:
+            return {"status": "ok", "message": "Special path accessed."}, 200
+        elif token and self.validate_token_function(token):
             return {"status": "success", "message": "Token is valid. Access granted."}, 200
         else:
             return {"status": "error", "message": "Token is invalid or expired. Access denied."}, 401
