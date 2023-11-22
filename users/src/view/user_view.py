@@ -42,6 +42,7 @@ class VistaCandidatos(Resource):
                 'ciudad_residencia': candidate['ciudad_residencia'],
                 'lenguajes_programacion': candidate['lenguajes_programacion'],
                 'tecnologias_herramientas': candidate['tecnologias_herramientas'],
+                'soft_skill': candidate.get('soft_skills', []),
                 'educacion': candidate['educacion'],
                 'experiencia': candidate['experiencia'],
                 'idiomas': candidate['idiomas'],
@@ -223,6 +224,7 @@ class VistaUsers(Resource):
                 'ciudad_residencia': entity.get('ciudad_residencia', ''),
                 'lenguajes_programacion': entity.get('lenguajes_programacion', []),
                 'tecnologias_herramientas': entity.get('tecnologias_herramientas', []),
+                'soft_skill': entity.get('soft_skills', []),
                 'educacion': entity.get('educacion', []),
                 'experiencia': entity.get('experiencia', []),
                 'idiomas': entity.get('idiomas', []),
@@ -263,7 +265,7 @@ class VistaUserUpdate(Resource):
                 'ciudad_residencia': data.get('ciudad_residencia', ''),
                 'lenguajes_programacion': data.get('lenguajes_programacion', []),
                 'tecnologias_herramientas': data.get('tecnologias_herramientas', []),
-                'soft_skill': data.get('soft_skill', []),
+                'soft_skills': data.get('soft_skill', []),
                 'rol': data.get('rol', []),
                 # Add more fields as needed
             })
