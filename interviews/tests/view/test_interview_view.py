@@ -17,7 +17,7 @@ def client():
                 with app.test_client() as client:
                     yield client
 @patch('google.cloud.datastore.Client')
-def test_request_pre_onterview(mock_datastore_client, client ):
+def test_request_pre_interview(mock_datastore_client, client ):
 
         mock_client_instance = Mock()
         mock_datastore_client.return_value = mock_client_instance
@@ -32,6 +32,23 @@ def test_request_pre_onterview(mock_datastore_client, client ):
 
         response = client.post("/interviews/pre-candidate", json=test_data)
         assert response.status_code == 200
+
+@patch('google.cloud.datastore.Client')
+def test_request_results(mock_datastore_client, client):
+
+    mock_interview_entity = Mock()
+    mock_datastore_client.get.return_value = mock_interview_entity
+
+    # Prepare test data
+    test_data = {
+        "result": "failed"
+    }
+
+    response = client.post("/interviews/222222", json=test_data)
+    assert response.status_code == 201
+
+
+
 
 
 
