@@ -7,7 +7,7 @@ import firebase_admin
 from firebase_admin import credentials
 from google.oauth2 import service_account
 
-from src.view.public_user_view import VistaPing, VistaSignUp, VistaLogIn
+from src.view.public_user_view import VistaPing, VistaSignUp, VistaLogIn, VistaValidate
 
 app = Flask(__name__)
 
@@ -18,6 +18,7 @@ api = Api(app)
 api.add_resource(VistaPing, "/public/ping")
 api.add_resource(VistaSignUp, "/public/register")
 api.add_resource(VistaLogIn, "/public/login")
+api.add_resource(VistaValidate, "/public/validate")
 
 data = os.path.abspath(os.path.dirname(__file__)) + "/firebase.json"
 cred = credentials.Certificate(data)
