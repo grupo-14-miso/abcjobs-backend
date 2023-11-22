@@ -10,6 +10,7 @@ metadata:
   annotations:
     kubernetes.io/ingress.allow-http: "true"
     cert-manager.io/issuer: letsencrypt-prod
+    nginx.ingress.kubernetes.io/auth-skip-uri: "/public/register|/public/login"
     nginx.ingress.kubernetes.io/auth-url: "http://servicio-public.default.svc.cluster.local/public/validate"
     nginx.ingress.kubernetes.io/auth-method: POST
     nginx.ingress.kubernetes.io/auth-response-headers: "Authorization, X-User-Roles"
