@@ -1,6 +1,7 @@
 from datetime import datetime
 from flask_restful import Resource
-from flask import request
+from flask import request, jsonify
+
 
 from src.utils.auth import auth_admin_user, auth_candidate, auth_company
 from src.utils.persistence import persist_new_admin_user, persist_new_candidate, persist_new_company
@@ -60,3 +61,26 @@ class VistaLogIn(Resource):
             return auth_candidate(email, password)
         elif role == 'Company':
             return auth_company(email, password)
+
+class VistaValidate(Resource):
+    def post(self):
+        token = request.headers.get('Authorization')
+        print("Request Method:", request.method)
+        print("Request Path:", request.path)
+        print("Request Full Path:", request.full_path)
+        print("Request URI:", request.url)
+        print("Request Headers:", request.headers)
+        print("Request JSON Data:", request.json if request.is_json else None)
+        print("Request Form Data:", request.form if request.form else None)
+        if token and self.validate_token_function(token):
+            return {"status": "success", "message": "Token is valid. Access granted."}, 200
+        else:
+            return {"status": "error", "message": "Token is invalid or expired. Access denied."}, 401
+
+    def validate_token_function(self,token):
+        # Placeholder for token validation logic
+        # Implement your actual token validation logic here
+        # For example, check if the token is a valid JWT
+        print(token)
+        return True
+

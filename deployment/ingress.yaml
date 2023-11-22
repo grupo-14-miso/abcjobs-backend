@@ -10,6 +10,9 @@ metadata:
   annotations:
     kubernetes.io/ingress.allow-http: "true"
     cert-manager.io/issuer: letsencrypt-prod
+    nginx.ingress.kubernetes.io/auth-url: "http://auth-service/public/validate"
+    nginx.ingress.kubernetes.io/auth-response-headers: "Authorization, X-User-Roles"
+
 spec:
   tls:
     - secretName: letsencrypt-prod
