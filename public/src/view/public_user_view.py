@@ -65,8 +65,12 @@ class VistaLogIn(Resource):
 class VistaValidate(Resource):
     def post(self):
         token = request.headers.get('Authorization')
-        path = request.headers.get('X-Original-Uri', request.path)
+        path = request.headers.get('X-Original-Uri')
+        if not path:
+            # If X-Original-Uri is not present, tgitry other headers or fallback to request.path
+            path = request.headers.get('Another-Original-Uri', request.path)
 
+        
         print("Request Method:", request.method)
         print("Request Path:", request.path)
         print("Request Full Path:", request.full_path)
