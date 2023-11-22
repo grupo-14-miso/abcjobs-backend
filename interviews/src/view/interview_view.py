@@ -107,8 +107,21 @@ class VistaInterview(Resource):
     def get(self):
         client = datastore.Client()
 
+        candidate_param = request.args.get('candidate')
+        company_param = request.args.get('company')
+
+
         # Query all interviews
         interview_query = client.query(kind=interviews_domain)
+
+        if candidate_param:
+            candidate_array = [candidate_param] 
+            interview_query.add_filter('candidates', 'IN', candidate_array)
+        
+        if company_param:
+            interview_query.add_filter('id_company', '=', company_param)
+        
+
         interview_results = list(interview_query.fetch())
 
         all_interview_details = []

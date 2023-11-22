@@ -183,7 +183,7 @@ class VistaUsers(Resource):
 
         # Apply filters based on optional query parameters
         if soft_skills:
-            query.add_filter('soft_skills', 'in', soft_skills)
+            query.add_filter('soft_skills', 'IN', soft_skills)
 
         if rol:
             query.add_filter('rol', 'IN', rol)
