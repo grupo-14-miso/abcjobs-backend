@@ -13,7 +13,6 @@ app = Flask(__name__)
 
 app.config['PROPAGATE_EXCEPTIONS'] = True
 app.config["JWT_SECRET_KEY"] = 'users_s4cret_ke1'
-
 api = Api(app)
 api.add_resource(VistaPing, "/public/ping")
 api.add_resource(VistaSignUp, "/public/register")
