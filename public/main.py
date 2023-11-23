@@ -24,7 +24,6 @@ cred = credentials.Certificate(data)
 firebase_admin.initialize_app(cred)
 credentials = service_account.Credentials.from_service_account_file(data)
 
-
 cors = CORS(app)
 app_context = app.app_context()
 app_context.push()
