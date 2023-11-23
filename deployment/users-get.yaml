@@ -1,0 +1,68 @@
+---
+###################################
+# users-get 
+###################################
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: users-get
+  labels:
+    app: users-get
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: users-get
+  template:
+    metadata:
+      labels:
+        app: users-get
+    spec:
+      containers:
+        - name: users-get
+          image: gcr.io/abc-jobs-miso/users-get:1.0
+          env:
+            - name: GOOGLE_APPLICATION_CREDENTIALS
+              value: /etc/credentials/credentials.json
+          volumeMounts:
+            - name: service-account-credentials
+              mountPath: "/etc/credentials"
+              readOnly: true
+          ports:
+            - containerPort: 3000
+          # Realizar pull siempre a la imagen
+          imagePullPolicy: Always
+      imagePullSecrets:
+        - name: gcr-access-token
+      volumes:
+        - name: service-account-credentials
+          secret:
+            secretName: service-account-credentials
+
+---
+#apiVersion: cloud.google.com/v1
+#kind: BackendConfig
+#metadata:
+#  name: users-get-config
+#spec:
+##  healthCheck:
+#    checkIntervalSec: 30
+#    port: 3000
+#    type: HTTP
+#    requestPath: /users-get/ping
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: servicio-users-get
+  annotations:
+    cloud.google.com/backend-config: '{"default": "users-get-config"}'
+spec:
+  type: NodePort
+  selector:
+    app: users-get
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+      nodePort: 31024      
