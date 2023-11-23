@@ -29,6 +29,5 @@ app_context = app.app_context()
 app_context.push()
 jwt = JWTManager(app)
 
-
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=3005)
