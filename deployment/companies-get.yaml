@@ -1,0 +1,70 @@
+---
+###################################
+# companies-get 
+###################################
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: companies-get
+  labels:
+    app: companies-get
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: companies-get
+  template:
+    metadata:
+      labels:
+        app: companies-get
+    spec:
+      containers:
+        - name: companies-get
+          image: gcr.io/abc-jobs-miso/companies-get:1.0
+          env:
+            - name: GOOGLE_APPLICATION_CREDENTIALS
+              value: /etc/credentials/credentials.json
+          volumeMounts:
+            - name: service-account-credentials
+              mountPath: "/etc/credentials"
+              readOnly: true
+          ports:
+            - containerPort: 3002
+          # Realizar pull siempre a la imagen
+          imagePullPolicy: Always
+      imagePullSecrets:
+        - name: gcr-access-token
+      volumes:
+        - name: service-account-credentials
+          secret:
+            secretName: service-account-credentials
+
+---
+#apiVersion: cloud.google.com/v1
+#kind: BackendConfig
+#metadata:
+#  name: companies-get-config
+#spec:
+##  healthCheck:
+#    checkIntervalSec: 30
+#    port: 3000
+#    type: HTTP
+#    requestPath: /companies-get/ping
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: servicio-companies-get
+  annotations:
+    cloud.google.com/backend-config: '{"default": "companies-get-config"}'
+spec:
+  type: NodePort
+  selector:
+    app: companies-get
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3007
+      nodePort: 31025
+      
+---
