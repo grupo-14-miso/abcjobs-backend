@@ -16,7 +16,6 @@ data = os.path.abspath(os.path.dirname(__file__)) + "/firebase.json"
 cred = credentials.Certificate(data)
 firebase_admin.initialize_app(cred)
 
-
 api = Api(app)
 api.add_resource(VistaPing, "/interviews-get/ping")
 api.add_resource(VistaInterviewCompany, "/interviews-get/offer/<string:id_offer>/pre")
