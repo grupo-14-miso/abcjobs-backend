@@ -72,3 +72,10 @@ spec:
                 name: servicio-companies-get
                 port: 
                   number: 80
+          - pathType: Prefix
+            path: /assignments-get
+            backend:
+              service:
+                name: servicio-assignments-get
+                port: 
+                  number: 80
