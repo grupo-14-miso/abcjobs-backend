@@ -10,7 +10,6 @@ from google.oauth2 import service_account
 from src.view.public_user_view import VistaPing, VistaSignUp, VistaLogIn, VistaValidate
 
 app = Flask(__name__)
-
 app.config['PROPAGATE_EXCEPTIONS'] = True
 app.config["JWT_SECRET_KEY"] = 'users_s4cret_ke1'
 api = Api(app)
