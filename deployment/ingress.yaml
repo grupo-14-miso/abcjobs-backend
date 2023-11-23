@@ -79,3 +79,10 @@ spec:
                 name: servicio-assignments-get
                 port: 
                   number: 80
+          - pathType: Prefix
+            path: /interviews-get
+            backend:
+              service:
+                name: servicio-interviews-get
+                port: 
+                  number: 80
