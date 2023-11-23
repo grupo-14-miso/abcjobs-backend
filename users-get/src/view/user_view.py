@@ -3,7 +3,7 @@ from flask import request
 from flask import jsonify
 from google.cloud import datastore
 
-from src.utils.utils import get_results_from_entity, get_entities_by_field
+from src.utils.utils import get_results_from_entity, get_entities_by_field, get_candidates_ready
 
 candidates_domain = 'candidates'
 assignments_domain = 'assignments-data'
@@ -155,7 +155,6 @@ class VistaUsers(Resource):
 class VistaCandidatosReady(Resource):
     def get(self, id_offer):
         required_complete_assignments = ['Technical', 'Performance', 'Language', 'Psychotechnical']
-        candidates_ready = []
         # Get Pre Interviews By Offer
         pre_interwiews = get_entities_by_field(pre_interview_domain, 'id_offer', id_offer)
         candidates_on_pre_interview = []
@@ -167,21 +166,7 @@ class VistaCandidatosReady(Resource):
         # Get Assignments
         assignments = get_results_from_entity(assignments_domain)
         # Validate completion of all types
-        for candidate in candidates:
-            candidate_completed_assignments = []
-            for assignment in assignments:
-                assignment_candidate = assignment.get('candidate')
-                status = assignment.get('status')
-                assignment_type = assignment.get('type')
-                if assignment_candidate == str(candidate.id) and str(candidate.id) in candidates_on_pre_interview and status == 'finished' and assignment_type \
-                        not in candidate_completed_assignments and assignment_type in required_complete_assignments:
-                    candidate_completed_assignments.append(assignment_type)
-            if len(candidate_completed_assignments) >= 4:
-                candidates_ready.append({
-                "id": candidate.id,
-                "id_candidato": candidate.get('id_candidato'),
-                "name": candidate.get('Nombre', '') + candidate.get('apellido', '')
-            })
+        candidates_ready = get_candidates_ready(candidates, assignments, candidates_on_pre_interview, required_complete_assignments)
 
         return candidates_ready
 

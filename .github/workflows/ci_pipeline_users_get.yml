@@ -62,7 +62,6 @@ jobs:
       - name: Apply deployment
         working-directory: ./deployment
         run: |
-          kubectl delete -f users-get.yaml
           kubectl apply -f users-get.yaml
 
 

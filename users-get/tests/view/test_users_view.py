@@ -1,6 +1,9 @@
 from unittest.mock import patch, MagicMock
 import pytest
+from google.cloud.datastore import Entity
+
 from main import app
+from src.utils.utils import get_candidates_ready
 
 # Mock firebase_admin for tests
 firebase_admin = MagicMock()
@@ -77,12 +80,12 @@ def client():
                     yield client
 
 def test_ping(client):
-    response_valid = client.get("/users/ping")
+    response_valid = client.get("/users-get/ping")
     assert response_valid.json == "Pong"
 
 def test_user_profile(client):
-    # Perform a GET request to /users/profiles
-    response = client.get('/users/profiles')
+    # Perform a GET request to /users-get/profiles
+    response = client.get('/users-get/profiles')
 
     # Validate the response
     assert response.status_code == 200
@@ -90,7 +93,7 @@ def test_user_profile(client):
 
 def test_get_all_users(client):
     # Perform a GET request to /users
-    response = client.get('/users')
+    response = client.get('/users-get?rol=Devops&soft_skills=Hablador&lenguajes_programacion=Ingles&tecnologias_herramientas=Python&idiomas=Español')
 
     # Validate the response
     assert response.status_code == 200
@@ -100,7 +103,7 @@ def test_get_all_users(client):
 def test_get_candidato_exception(client):
     # Perform a GET request to /users
     try:
-        response = client.get('/users/123')
+        response = client.get('/users-get/123')
     except:
         # Validate the response
         assert True
@@ -108,34 +111,17 @@ def test_get_candidato_exception(client):
 
 def test_get_users_ready(client):
     # Perform get request to users ready
-    response = client.get('/users/ready/5163227868561408')
+    response = client.get('/users-get/ready/5163227868561408')
     assert response.status_code == 200
 
 
-@patch('src.utils.utils.get_entities_by_field')
-@patch('src.utils.utils.get_results_from_entity')
-def test_get_method(mock_get_entities_by_field, mock_get_results_from_entity, client):
+
+def test_get_candidates_ready(client):
     # Mock the necessary functions
-    mock_get_entities_by_field.return_value = [{'id_candidate': '1'}, {'id_candidate': '2'}]
-    mock_get_results_from_entity.return_value = [
-        MagicMock(id='1', get=MagicMock(return_value={'id_candidato': '001', 'Nombre': 'John', 'apellido': 'Doe'})),
-        MagicMock(id='2', get=MagicMock(return_value={'id_candidato': '002', 'Nombre': 'Jane', 'apellido': 'Doe'}))
-    ]
-
-
-
-    # Call the method you want to test
-    result = client.get('/users/ready/5163227868561408')
-
-    # Define the expected result based on the mocked data
-    expected_result = [
-        {"id": '1', "id_candidato": '001', "name": 'John Doe'},
-        {"id": '2', "id_candidato": '002', "name": 'Jane Doe'}
-    ]
-
-    # Assert that the method returns the expected result
-
-    # Assert that the mocked functions were called with the correct arguments
+    candidates = [Entity()]
+    assignments = [Entity()]
+    results = get_candidates_ready(candidates, [], [], [])
+    assert isinstance(results, list)
 
 
 

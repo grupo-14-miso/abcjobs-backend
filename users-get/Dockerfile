@@ -20,7 +20,7 @@ RUN pipenv install --deploy --ignore-pipfile
 ENV NEW_RELIC_LICENSE_KEY=2871e7153e4b28d60f1c6941c6522eedFFFFNRAL
 ENV NEW_RELIC_APP_NAME=users-get
 # Expose port for users microservice
-EXPOSE 80
+EXPOSE 3006
 
 
 CMD ["pipenv", "run", "newrelic-admin", "run-program", "python", "main.py"]

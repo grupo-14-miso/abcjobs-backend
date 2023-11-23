@@ -19,3 +19,23 @@ def get_results_from_entity(entity):
     query = client.query(kind=entity)
     results = query.fetch()
     return list(results)
+
+
+def get_candidates_ready(candidates, assignments, candidates_on_pre_interview, required_complete_assignments):
+    candidates_ready = []
+    for candidate in candidates:
+        candidate_completed_assignments = []
+        for assignment in assignments:
+            assignment_candidate = assignment.get('candidate')
+            status = assignment.get('status')
+            assignment_type = assignment.get('type')
+            if assignment_candidate == str(candidate.id) and str(candidate.id) in candidates_on_pre_interview and status == 'finished' and assignment_type \
+                    not in candidate_completed_assignments and assignment_type in required_complete_assignments:
+                candidate_completed_assignments.append(assignment_type)
+        if len(candidate_completed_assignments) >= 4:
+            candidates_ready.append({
+            "id": candidate.id,
+            "id_candidato": candidate.get('id_candidato'),
+            "name": candidate.get('Nombre', '') + candidate.get('apellido', '')
+        })
+    return candidates_ready

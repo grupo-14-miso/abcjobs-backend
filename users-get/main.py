@@ -21,11 +21,11 @@ firebase_admin.initialize_app(cred)
 app.config['PROPAGATE_EXCEPTIONS'] = True
 
 api = Api(app)
-api.add_resource(VistaUsers, "/users")
-api.add_resource(VistaPing, "/users/ping")
-api.add_resource(VistaUserProfile, "/users/profiles")
-api.add_resource(VistaCandidatos, "/users/<string:id_candidate>")
-api.add_resource(VistaCandidatosReady, "/users/ready/<string:id_offer>")
+api.add_resource(VistaUsers, "/users-get")
+api.add_resource(VistaPing, "/users-get/ping")
+api.add_resource(VistaUserProfile, "/users-get/profiles")
+api.add_resource(VistaCandidatos, "/users-get/<string:id_candidate>")
+api.add_resource(VistaCandidatosReady, "/users-get/ready/<string:id_offer>")
 
 
 cors = CORS(app)
@@ -35,4 +35,4 @@ jwt = JWTManager(app)
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=3000)
+    app.run(host="0.0.0.0", port=3006)
