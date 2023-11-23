@@ -57,4 +57,11 @@ spec:
               service:
                 name: servicio-interviews
                 port: 
-                  number: 80        
+                  number: 80   
+          - pathType: Prefix
+            path: /users-get
+            backend:
+              service:
+                name: servicio-users-get
+                port: 
+                  number: 80     
