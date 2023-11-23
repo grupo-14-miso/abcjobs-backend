@@ -19,7 +19,6 @@ api.add_resource(VistaSignUp, "/public/register")
 api.add_resource(VistaLogIn, "/public/login")
 api.add_resource(VistaValidate, "/public/validate")
 
-
 data = os.path.abspath(os.path.dirname(__file__)) + "/firebase.json"
 cred = credentials.Certificate(data)
 firebase_admin.initialize_app(cred)
