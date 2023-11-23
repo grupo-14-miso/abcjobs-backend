@@ -64,4 +64,11 @@ spec:
               service:
                 name: servicio-users-get
                 port: 
-                  number: 80     
+                  number: 80
+          - pathType: Prefix
+            path: /companies-get
+            backend:
+              service:
+                name: servicio-companies-get
+                port: 
+                  number: 80

@@ -1,0 +1,67 @@
+# Ejemplo de github action para probar python
+# Docs: https://docs.github.com/es/actions/using-workflows/workflow-syntax-for-github-actions
+name: CI/CD Pipeline companies-get
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'companies-get/**'
+
+env: 
+  PROJECT_ID: abc-jobs-miso
+  CLUSTER_NAME: primary
+  ZONE: us-central1
+
+jobs:
+  build-backend:
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 1
+      matrix:
+        python-version: [ 3.11 ]
+    steps:
+      - uses: actions/checkout@v1
+      - name: Run tests for companies-get
+        working-directory: ./companies-get
+        run: |
+          pip install pipenv
+          pip install httmock
+          pipenv sync --system --dev
+          export VIRTUAL_ENV="$(pipenv --venv)" PATH="$(pipenv --venv)/bin:$PATH"
+          pytest --cov=src -v -s --cov-fail-under=80
+
+      - id: 'auth'
+        uses: 'google-github-actions/auth@v1'
+        with:
+          credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
+          token_format: 'access_token'
+
+      - run: |
+          export USE_GKE_GCLOUD_AUTH_PLUGIN=True
+          echo '${{ steps.auth.outputs.access_token }}' | docker login -u oauth2accesstoken --password-stdin https://gcr.io
+
+      - name: Build and Push Docker Image
+        uses: docker/build-push-action@v2
+        with:
+          context: companies-get
+          push: true
+          tags: gcr.io/abc-jobs-miso/companies-get:1.0
+
+      - name: Login to Google Cloud
+        uses: google-github-actions/setup-gcloud@v1
+
+      - name: Deploy to GKE
+        run: |
+          gcloud components install gke-gcloud-auth-plugin
+          gcloud config set project abc-jobs-miso
+          gcloud config set compute/zone us-central1
+          gcloud container clusters get-credentials primary
+      
+      - name: Apply deployment
+        working-directory: ./deployment
+        run: |
+          kubectl apply -f companies-get.yaml
+
+
