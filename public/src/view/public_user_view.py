@@ -78,7 +78,7 @@ class VistaValidate(Resource):
 
         
         logger.info("Request Method:", request.method)
-        logger.info("headers: ", request.headers)
+        logger.info("Token: ", token)
         #logger.info("Request Path:", request.path)
         #logger.info("Request Full Path:", request.full_path)
         #logger.info("Request URI:", request.url)

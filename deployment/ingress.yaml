@@ -11,12 +11,17 @@ metadata:
     kubernetes.io/ingress.allow-http: "true"
     cert-manager.io/issuer: letsencrypt-prod
     #nginx.ingress.kubernetes.io/auth-skip-uri: "/public/register|/public/login"
+    nginx.ingress.kubernetes.io/enable-cors: "true"
     nginx.ingress.kubernetes.io/auth-url: "http://servicio-public.default.svc.cluster.local/public/validate"
     nginx.ingress.kubernetes.io/auth-method: POST
     nginx.ingress.kubernetes.io/auth-response-headers: "Authorization, X-User-Roles"
     nginx.ingress.kubernetes.io/cors-allow-origin: "*"  # Replace with your web app's origin
     nginx.ingress.kubernetes.io/cors-allow-methods: "GET, POST, OPTIONS, PUT, DELETE"  # Allow necessary methods
     nginx.ingress.kubernetes.io/cors-allow-headers: "Authorization, Content-Type"  # Allow necessary headers
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      more_set_headers "Access-Control-Allow-Origin: '*'";
+      more_set_headers "Access-Control-Allow-Methods: GET, POST, OPTIONS";
+      more_set_headers "Access-Control-Allow-Headers: authorization";
 
 spec:
   tls:
