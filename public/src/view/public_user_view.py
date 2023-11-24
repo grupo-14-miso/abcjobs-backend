@@ -77,7 +77,8 @@ class VistaValidate(Resource):
             path = request.headers.get('Another-Original-Uri', request.path)
 
         
-        #logger.info("Request Method:", request.method)
+        logger.info("Request Method:", request.method)
+        logger.info("Token: ", token)
         #logger.info("Request Path:", request.path)
         #logger.info("Request Full Path:", request.full_path)
         #logger.info("Request URI:", request.url)
