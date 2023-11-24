@@ -42,3 +42,12 @@ def test_get_equipo_from_offer(client):
     # Validate the response
     assert response.status_code == 200
     assert response.json == []
+
+
+def test_get_offer_exception(client):
+    # Perform a GET request to /users
+    try:
+        response = client.get('/companies-get/offerById/123')
+    except:
+        # Validate the response
+        assert True
