@@ -17,6 +17,7 @@ class VistaPing(Resource):
 
 class VistaInterviewCompany(Resource):
     def get(self, id_offer):
+
         client = datastore.Client()
 
         # Query all pre_interview entities
@@ -32,17 +33,19 @@ class VistaInterviewCompany(Resource):
             key_candidate = client.key(candidates_domain, int(candidate_id))
 
             candidate = client.get(key_candidate)
-
             # Combine the results
             pre_interview_details = {
                 'key': pre_interview_entity.key.path[-1],
                 'pre_interview': pre_interview_entity,
                 'candidate': candidate if candidate else None,
             }
+            
+            if 'candidate' in pre_interview_details and 'password_hash' in pre_interview_details['candidate']:
+                pre_interview_details['candidate']['password_hash'] = ""
+                pre_interview_details['candidate']['salt'] = ""
 
             all_pre_interview_details.append(pre_interview_details)
-
-        return all_pre_interview_details
+        return jsonify(all_pre_interview_details)
 
 
 class VistaInterview(Resource):
