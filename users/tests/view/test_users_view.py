@@ -1,6 +1,9 @@
 from unittest.mock import patch, MagicMock
 import pytest
+from google.cloud.datastore import Entity
+
 from main import app
+from src.utils.utils import get_candidates_ready
 
 # Mock firebase_admin for tests
 firebase_admin = MagicMock()
@@ -226,5 +229,13 @@ def test_get_users_ready(client):
     # Perform get request to users ready
     response = client.get('/users/ready/5163227868561408')
     assert response.status_code == 200
+
+
+def test_get_candidates_ready(client):
+    # Mock the necessary functions
+    candidates = [Entity()]
+    assignments = [Entity()]
+    results = get_candidates_ready(candidates, assignments, [], [])
+    assert isinstance(results, list)
 
 

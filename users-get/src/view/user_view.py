@@ -154,7 +154,7 @@ class VistaUsers(Resource):
 
 class VistaCandidatosReady(Resource):
     def get(self, id_offer):
-        required_complete_assignments = ['Technical', 'Performance', 'Language', 'Psychotechnical']
+        required_complete_assignments = ['Technical', 'Language', 'Psychotechnical']
         # Get Pre Interviews By Offer
         pre_interwiews = get_entities_by_field(pre_interview_domain, 'id_offer', id_offer)
         candidates_on_pre_interview = []

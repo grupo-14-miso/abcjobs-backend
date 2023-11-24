@@ -120,7 +120,7 @@ def test_get_candidates_ready(client):
     # Mock the necessary functions
     candidates = [Entity()]
     assignments = [Entity()]
-    results = get_candidates_ready(candidates, [], [], [])
+    results = get_candidates_ready(candidates, assignments, [], [])
     assert isinstance(results, list)
 
 

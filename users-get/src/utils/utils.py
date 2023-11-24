@@ -32,7 +32,7 @@ def get_candidates_ready(candidates, assignments, candidates_on_pre_interview, r
             if assignment_candidate == str(candidate.id) and str(candidate.id) in candidates_on_pre_interview and status == 'finished' and assignment_type \
                     not in candidate_completed_assignments and assignment_type in required_complete_assignments:
                 candidate_completed_assignments.append(assignment_type)
-        if len(candidate_completed_assignments) >= 4:
+        if len(candidate_completed_assignments) >= 3:
             candidates_ready.append({
             "id": candidate.id,
             "id_candidato": candidate.get('id_candidato'),

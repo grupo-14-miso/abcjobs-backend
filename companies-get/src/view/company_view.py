@@ -40,6 +40,23 @@ class CompanyView(Resource):
         return jsonify(companies)
 
 
+class OfferByIdView(Resource):
+    def get(self, offer_id):
+        client = datastore.Client()
+        key_offer = client.key(offers_entity, int(offer_id))
+        offer = client.get(key_offer)
+        return {
+                'offer_id': offer.id,  # Generate a unique ID
+                'company_id': offer.get('company_id'),
+                'name': offer.get('name'),
+                'description': offer.get('description'),
+                'start_date': offer.get('start_date'),
+                'end_date': offer.get('end_date'),
+                'created_date': offer.get('created_date'),
+                'last_modified': offer.get('last_modified')
+            }
+
+
 class OfferByCompanyView(Resource):
     def get(self, company_id):
         # Initialize the Datastore client
