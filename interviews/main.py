@@ -4,12 +4,15 @@ from flask_jwt_extended import JWTManager
 from flask_restful import Api
 import firebase_admin
 from firebase_admin import credentials
+from flask_cors import CORS
 
 from src.view.interview_view import VistaPing, VistaSelectionUser, VistaInterviewCompany, VistaInterview, VistaInterviewResult
 
 app = Flask(__name__)
 
 app.config['PROPAGATE_EXCEPTIONS'] = True
+
+CORS(app)
 
 cred = credentials.Certificate('./firebase.json')
 firebase_admin.initialize_app(cred)
