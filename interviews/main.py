@@ -1,3 +1,4 @@
+from coverage.annotate import os
 from flask import Flask
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager
@@ -14,7 +15,8 @@ app.config['PROPAGATE_EXCEPTIONS'] = True
 
 CORS(app)
 
-cred = credentials.Certificate('./firebase.json')
+data = os.path.abspath(os.path.dirname(__file__)) + "/firebase.json"
+cred = credentials.Certificate(data)
 firebase_admin.initialize_app(cred)
 
 
