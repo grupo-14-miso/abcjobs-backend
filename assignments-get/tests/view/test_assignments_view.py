@@ -1,6 +1,9 @@
 from unittest.mock import patch, MagicMock
 import pytest
-from src.main import app
+from google.cloud.datastore import Entity
+
+from main import app
+from src.utils.utils import  get_assignments_to_return
 
 # Mock firebase_admin for tests
 firebase_admin = MagicMock()
@@ -33,7 +36,7 @@ def mock_pubsub_client():
 # Mock the Flask client
 @pytest.fixture
 def client():
-    with patch('src.main.firebase_admin', firebase_admin):
+    with patch('main.firebase_admin', firebase_admin):
         with patch('google.auth.default', return_value=(None, None)):  # Mock GCP authentication
             with patch('google.cloud.datastore.Client', autospec=True):  # Mock Datastore Client
                     with app.test_client() as client:
@@ -79,5 +82,16 @@ def test_assignment_by_candidate_test(client, mock_datastore_client):
 
     # Validate the response
     assert response.status_code == 200
+
+
+def test_assignments_to_return(client):
+    mock_client = MagicMock()
+    pre_interview_entity = Entity()
+    pre_interview_entity.update({
+        'id_candidate': '1234'
+    })
+    response = get_assignments_to_return(mock_client, [pre_interview_entity])
+    assert isinstance(response, list)
+
 
 
