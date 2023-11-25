@@ -1,6 +1,7 @@
 from unittest.mock import patch, MagicMock
 import pytest
-from src.main import app
+from main import app
+from src.utils.utils import pubsub_to_backend
 
 # Mock firebase_admin for tests
 firebase_admin = MagicMock()
@@ -33,7 +34,7 @@ def mock_pubsub_client():
 # Mock the Flask client
 @pytest.fixture
 def client():
-    with patch('src.main.firebase_admin', firebase_admin):
+    with patch('main.firebase_admin', firebase_admin):
         with patch('google.auth.default', return_value=(None, None)):  # Mock GCP authentication
             with patch('google.cloud.datastore.Client', autospec=True):  # Mock Datastore Client
                     with app.test_client() as client:
@@ -68,7 +69,7 @@ def test_assignments_with_firebase_mock(client):
 
 @patch('google.cloud.pubsub_v1.PublisherClient', autospec=True, return_value=pubsub_client)
 @patch('google.auth.default', return_value=(None, None))
-@patch('src.main.firebase_admin', firebase_admin)
+@patch('main.firebase_admin', firebase_admin)
 def test_assignments_with_pubsub_mock(mock_firebase_admin, mock_auth_default, mock_pubsub_client, client):
     # Set up mock return values or behaviors for Datastore Client
 
@@ -219,4 +220,9 @@ def test_assignment_by_candidate_test(client, mock_datastore_client):
     # Validate the response
     assert response.status_code == 200
 
+
+def test_pub_sub_code(client):
+    event = {'data': 'eyJhc3NpZ25tZW50X2lkIjogIjQ4Njc0NDk0NDI3OTU1MjAiLCAiYW5zd2VycyI6IFt7ImEiOiAiVGhlc2VzIn0sIHsiYiI6ICJUaGVzaXNlcyJ9LCB7ImMiOiAiVGhlc2kifSwgeyJkIjogIlRoZXNpaSJ9XSwgImNvcnJlY3RfYW5zd2VyIjogWyJhIl0sICJzZWxlY3RlZF9hbnN3ZXIiOiBbImEiXSwgImRlc2NyaXB0aW9uIjogIldoYXQgaXMgdGhlIHBsdXJhbCBmb3JtIG9mICd0aGVzaXMnPyIsICJjcmVhdGVkX3RpbWVzdGFtcCI6ICIyMDIzLTExLTI1VDE0OjI0OjI2LjU5ODY1NyJ9'}
+    response = pubsub_to_backend(event)
+    assert response is not None
 
