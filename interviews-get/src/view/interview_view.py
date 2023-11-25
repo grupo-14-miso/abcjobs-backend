@@ -3,6 +3,8 @@ from google.cloud import datastore
 from flask import request
 from flask import jsonify
 
+from src.utils.utils import remove_password_properties, get_details_for_interview
+
 pre_interview_domain = 'pre_interview'
 candidates_domain = 'candidates'
 interviews_domain = 'interviews'
@@ -84,33 +86,9 @@ class VistaInterview(Resource):
             }
 
             # For each candidate, fetch details from candidates, offers-data, and companies-data entities
-            candidate_details = self.get_candidate_details(interview_entity, client)
+            candidate_details = get_details_for_interview(client, interview_entity)
 
             interview_details['candidates_details'] = candidate_details
             all_interview_details.append(interview_details)
 
         return jsonify(all_interview_details)
-
-    def get_candidate_details(self, interview_entity, client):
-        # For each candidate, fetch details from candidates, offers-data, and companies-data entities
-        candidate_details = []
-        for candidate_id in interview_entity['candidates']:
-            # Fetch details from candidates entity
-            candidate_key = client.key(candidates_domain, int(candidate_id))
-            candidate_entity = client.get(candidate_key)
-
-            # Fetch details from offers-data entity
-            offer_key = client.key(offers_data_domain, int(interview_entity['id_offer']))
-            offer_entity = client.get(offer_key)
-
-            # Fetch details from companies-data entity
-            company_key = client.key(companies_data_domain, int(interview_entity['id_company']))
-            company_entity = client.get(company_key)
-
-            # Combine all details
-            candidate_details.append({
-                'candidate': candidate_entity,
-                'offer': offer_entity,
-                'company': company_entity,
-            })
-        return candidate_details

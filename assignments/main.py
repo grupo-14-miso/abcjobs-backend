@@ -1,3 +1,5 @@
+import os
+
 from flask import Flask
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager
@@ -13,9 +15,10 @@ from src.view.assignments_view import VistaPing, AssignmentsView, AssignmentSubm
 app = Flask(__name__)
 
 
-cred = credentials.Certificate("./firebase.json")
+data = os.path.abspath(os.path.dirname(__file__)) + "/firebase.json"
+cred = credentials.Certificate(data)
 firebase_admin.initialize_app(cred)
-credentials = service_account.Credentials.from_service_account_file("./firebase.json")
+credentials = service_account.Credentials.from_service_account_file(data)
 app.config['PROPAGATE_EXCEPTIONS'] = True
 
 project_id = 'abc-jobs-miso'

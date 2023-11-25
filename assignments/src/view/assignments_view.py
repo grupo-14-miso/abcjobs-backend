@@ -220,10 +220,13 @@ class AssignmentTemplateCandidate(Resource):
         # Initialize the Datastore client
         client = datastore.Client()
         query = client.query(kind=assigments_entity)
-        query.add_filter('candidate', '=', candidate_key)
+
         results = query.fetch()
         
         status = request.args.getlist('status')
+        if candidate_key != '0':
+            query.add_filter('candidate', '=', candidate_key)
+
 
 
         if status:
@@ -239,7 +242,8 @@ class AssignmentTemplateCandidate(Resource):
                 'focus': entity['focus'],
                 'questions': entity['questions'],
                 'status': entity['status'],
-                'result': entity['result']
+                'result': entity['result'],
+                'candidate_id': entity.get('candidate','')
             }
             assignments.append(assignment_data)
 

@@ -22,4 +22,4 @@ ENV NEW_RELIC_APP_NAME=assignments
 # Expose port for users microservice
 EXPOSE 3001
 
-CMD ["pipenv", "run", "newrelic-admin", "run-program", "python", "src/main.py"]
+CMD ["pipenv", "run", "newrelic-admin", "run-program", "python", "main.py"]

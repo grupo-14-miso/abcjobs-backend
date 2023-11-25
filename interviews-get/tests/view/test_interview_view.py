@@ -3,6 +3,7 @@ import pytest
 from google.cloud.datastore import Entity
 
 from main import app
+from src.utils.utils import remove_password_properties, get_details_for_interview
 from src.view.interview_view import VistaInterview
 
 # Mock firebase_admin for tests
@@ -74,10 +75,23 @@ def test_ping(client):
     assert response_valid.json == "Pong"
 
 
-def test_get_candidate_details(client):
-    interview = Entity()
-    interview.update({'candidates': ['1', '2'], 'id_offer':'123', 'id_company':'123'})
-    vista_interview = VistaInterview()
-    mock_client_instance = MagicMock()
-    response = vista_interview.get_candidate_details(interview, mock_client_instance)
+def test_remove_password_properties(client):
+    entity = Entity()
+    entity.update({
+        'password_hash': '1234',
+        'salt': '1234'
+    })
+    remove_password_properties(entity)
+    assert entity.get('password_hash', '') == ''
+
+
+def test_get_details_for_interview(client):
+    client = MagicMock()
+    interview_entity = Entity()
+    interview_entity.update({
+        'candidates': ['1234566'],
+        'id_offer': '1234566',
+        'id_company': '1234566'
+    })
+    response = get_details_for_interview(client, interview_entity)
     assert isinstance(response, list)
