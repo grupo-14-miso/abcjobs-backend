@@ -6,7 +6,6 @@ from flask_restful import Api
 import firebase_admin
 from firebase_admin import credentials
 from google.oauth2 import service_account
-
 from src.view.public_user_view import VistaPing, VistaSignUp, VistaLogIn, VistaValidate
 
 app = Flask(__name__)
