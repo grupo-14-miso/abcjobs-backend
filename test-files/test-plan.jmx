@@ -65,6 +65,10 @@
                 <stringProp name="Header.name">Accept</stringProp>
                 <stringProp name="Header.value">&quot;/&quot;</stringProp>
               </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Authorization</stringProp>
+                <stringProp name="Header.value">Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcwMDc5ODk5NSwianRpIjoiZWNkNjYwYmQtNDUwMS00ZTNmLTkxZDEtOGExMTcxMGE1NDY4IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IjU0ZmUyMjUxLWIxYzAtNGE1Yy1iZDc4LTAzMjliOTQzZTFjZSIsIm5iZiI6MTcwMDc5ODk5NSwiZXhwIjoxNzAwNzk5ODk1fQ.RWBxiRZnpp-RjvGgNVlQgIC6ymukzcM1_3fqJA54LE4</stringProp>
+              </elementProp>
             </collectionProp>
           </HeaderManager>
           <hashTree/>
@@ -106,29 +110,32 @@
           <boolProp name="HTTPSampler.md5">false</boolProp>
           <intProp name="HTTPSampler.ipSourceType">0</intProp>
         </HTTPSamplerProxy>
-        <hashTree>
-          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
-            <collectionProp name="HeaderManager.headers">
-              <elementProp name="" elementType="Header">
-                <stringProp name="Header.name">Content-Type</stringProp>
-                <stringProp name="Header.value">application/json</stringProp>
-              </elementProp>
-              <elementProp name="" elementType="Header">
-                <stringProp name="Header.name">Accept</stringProp>
-                <stringProp name="Header.value">application/json</stringProp>
-              </elementProp>
-              <elementProp name="" elementType="Header">
-                <stringProp name="Header.name">Connection</stringProp>
-                <stringProp name="Header.value">keep-alive</stringProp>
-              </elementProp>
-              <elementProp name="" elementType="Header">
-                <stringProp name="Header.name">Accept</stringProp>
-                <stringProp name="Header.value">&quot;/&quot;</stringProp>
-              </elementProp>
-            </collectionProp>
-          </HeaderManager>
-          <hashTree/>
-        </hashTree>
+        <hashTree/>
+        <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+          <collectionProp name="HeaderManager.headers">
+            <elementProp name="" elementType="Header">
+              <stringProp name="Header.name">Content-Type</stringProp>
+              <stringProp name="Header.value">application/json</stringProp>
+            </elementProp>
+            <elementProp name="" elementType="Header">
+              <stringProp name="Header.name">Accept</stringProp>
+              <stringProp name="Header.value">application/json</stringProp>
+            </elementProp>
+            <elementProp name="" elementType="Header">
+              <stringProp name="Header.name">Connection</stringProp>
+              <stringProp name="Header.value">keep-alive</stringProp>
+            </elementProp>
+            <elementProp name="" elementType="Header">
+              <stringProp name="Header.name">Accept</stringProp>
+              <stringProp name="Header.value">&quot;/&quot;</stringProp>
+            </elementProp>
+            <elementProp name="" elementType="Header">
+              <stringProp name="Header.name">Authorization</stringProp>
+              <stringProp name="Header.value">Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcwMDc5ODk5NSwianRpIjoiZWNkNjYwYmQtNDUwMS00ZTNmLTkxZDEtOGExMTcxMGE1NDY4IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IjU0ZmUyMjUxLWIxYzAtNGE1Yy1iZDc4LTAzMjliOTQzZTFjZSIsIm5iZiI6MTcwMDc5ODk5NSwiZXhwIjoxNzAwNzk5ODk1fQ.RWBxiRZnpp-RjvGgNVlQgIC6ymukzcM1_3fqJA54LE4</stringProp>
+            </elementProp>
+          </collectionProp>
+        </HeaderManager>
+        <hashTree/>
       </hashTree>
       <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Load Test Users" enabled="true">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
@@ -189,6 +196,31 @@
           </HeaderManager>
           <hashTree/>
         </hashTree>
+        <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+          <collectionProp name="HeaderManager.headers">
+            <elementProp name="" elementType="Header">
+              <stringProp name="Header.name">Content-Type</stringProp>
+              <stringProp name="Header.value">application/json</stringProp>
+            </elementProp>
+            <elementProp name="" elementType="Header">
+              <stringProp name="Header.name">Accept</stringProp>
+              <stringProp name="Header.value">application/json</stringProp>
+            </elementProp>
+            <elementProp name="" elementType="Header">
+              <stringProp name="Header.name">Connection</stringProp>
+              <stringProp name="Header.value">keep-alive</stringProp>
+            </elementProp>
+            <elementProp name="" elementType="Header">
+              <stringProp name="Header.name">Accept</stringProp>
+              <stringProp name="Header.value">&quot;/&quot;</stringProp>
+            </elementProp>
+            <elementProp name="" elementType="Header">
+              <stringProp name="Header.name">Authorization</stringProp>
+              <stringProp name="Header.value">Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcwMDc5ODk5NSwianRpIjoiZWNkNjYwYmQtNDUwMS00ZTNmLTkxZDEtOGExMTcxMGE1NDY4IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IjU0ZmUyMjUxLWIxYzAtNGE1Yy1iZDc4LTAzMjliOTQzZTFjZSIsIm5iZiI6MTcwMDc5ODk5NSwiZXhwIjoxNzAwNzk5ODk1fQ.RWBxiRZnpp-RjvGgNVlQgIC6ymukzcM1_3fqJA54LE4</stringProp>
+            </elementProp>
+          </collectionProp>
+        </HeaderManager>
+        <hashTree/>
       </hashTree>
       <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Load Test Users Get" enabled="true">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
@@ -244,6 +276,10 @@
               <elementProp name="" elementType="Header">
                 <stringProp name="Header.name">Accept</stringProp>
                 <stringProp name="Header.value">&quot;/&quot;</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Authorization</stringProp>
+                <stringProp name="Header.value">Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcwMDc5ODk5NSwianRpIjoiZWNkNjYwYmQtNDUwMS00ZTNmLTkxZDEtOGExMTcxMGE1NDY4IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IjU0ZmUyMjUxLWIxYzAtNGE1Yy1iZDc4LTAzMjliOTQzZTFjZSIsIm5iZiI6MTcwMDc5ODk5NSwiZXhwIjoxNzAwNzk5ODk1fQ.RWBxiRZnpp-RjvGgNVlQgIC6ymukzcM1_3fqJA54LE4</stringProp>
               </elementProp>
             </collectionProp>
           </HeaderManager>
@@ -305,6 +341,10 @@
                 <stringProp name="Header.name">Accept</stringProp>
                 <stringProp name="Header.value">&quot;/&quot;</stringProp>
               </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Authorization</stringProp>
+                <stringProp name="Header.value">Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcwMDc5ODk5NSwianRpIjoiZWNkNjYwYmQtNDUwMS00ZTNmLTkxZDEtOGExMTcxMGE1NDY4IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IjU0ZmUyMjUxLWIxYzAtNGE1Yy1iZDc4LTAzMjliOTQzZTFjZSIsIm5iZiI6MTcwMDc5ODk5NSwiZXhwIjoxNzAwNzk5ODk1fQ.RWBxiRZnpp-RjvGgNVlQgIC6ymukzcM1_3fqJA54LE4</stringProp>
+              </elementProp>
             </collectionProp>
           </HeaderManager>
           <hashTree/>
@@ -364,6 +404,10 @@
               <elementProp name="" elementType="Header">
                 <stringProp name="Header.name">Accept</stringProp>
                 <stringProp name="Header.value">&quot;/&quot;</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Authorization</stringProp>
+                <stringProp name="Header.value">Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcwMDc5ODk5NSwianRpIjoiZWNkNjYwYmQtNDUwMS00ZTNmLTkxZDEtOGExMTcxMGE1NDY4IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IjU0ZmUyMjUxLWIxYzAtNGE1Yy1iZDc4LTAzMjliOTQzZTFjZSIsIm5iZiI6MTcwMDc5ODk5NSwiZXhwIjoxNzAwNzk5ODk1fQ.RWBxiRZnpp-RjvGgNVlQgIC6ymukzcM1_3fqJA54LE4</stringProp>
               </elementProp>
             </collectionProp>
           </HeaderManager>
@@ -425,6 +469,10 @@
                 <stringProp name="Header.name">Accept</stringProp>
                 <stringProp name="Header.value">&quot;/&quot;</stringProp>
               </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Authorization</stringProp>
+                <stringProp name="Header.value">Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcwMDc5ODk5NSwianRpIjoiZWNkNjYwYmQtNDUwMS00ZTNmLTkxZDEtOGExMTcxMGE1NDY4IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IjU0ZmUyMjUxLWIxYzAtNGE1Yy1iZDc4LTAzMjliOTQzZTFjZSIsIm5iZiI6MTcwMDc5ODk5NSwiZXhwIjoxNzAwNzk5ODk1fQ.RWBxiRZnpp-RjvGgNVlQgIC6ymukzcM1_3fqJA54LE4</stringProp>
+              </elementProp>
             </collectionProp>
           </HeaderManager>
           <hashTree/>
@@ -485,6 +533,10 @@
                 <stringProp name="Header.name">Accept</stringProp>
                 <stringProp name="Header.value">&quot;/&quot;</stringProp>
               </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Authorization</stringProp>
+                <stringProp name="Header.value">Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcwMDc5ODk5NSwianRpIjoiZWNkNjYwYmQtNDUwMS00ZTNmLTkxZDEtOGExMTcxMGE1NDY4IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IjU0ZmUyMjUxLWIxYzAtNGE1Yy1iZDc4LTAzMjliOTQzZTFjZSIsIm5iZiI6MTcwMDc5ODk5NSwiZXhwIjoxNzAwNzk5ODk1fQ.RWBxiRZnpp-RjvGgNVlQgIC6ymukzcM1_3fqJA54LE4</stringProp>
+              </elementProp>
             </collectionProp>
           </HeaderManager>
           <hashTree/>
@@ -544,6 +596,10 @@
               <elementProp name="" elementType="Header">
                 <stringProp name="Header.name">Accept</stringProp>
                 <stringProp name="Header.value">&quot;/&quot;</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Authorization</stringProp>
+                <stringProp name="Header.value">Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcwMDc5ODk5NSwianRpIjoiZWNkNjYwYmQtNDUwMS00ZTNmLTkxZDEtOGExMTcxMGE1NDY4IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IjU0ZmUyMjUxLWIxYzAtNGE1Yy1iZDc4LTAzMjliOTQzZTFjZSIsIm5iZiI6MTcwMDc5ODk5NSwiZXhwIjoxNzAwNzk5ODk1fQ.RWBxiRZnpp-RjvGgNVlQgIC6ymukzcM1_3fqJA54LE4</stringProp>
               </elementProp>
             </collectionProp>
           </HeaderManager>
@@ -664,3 +720,4 @@
     </hashTree>
   </hashTree>
 </jmeterTestPlan>
+
