@@ -254,7 +254,7 @@ class AssignmentPerformanceCompany(Resource):
     def get(self, id_company):
         client = datastore.Client()
         pre_interview_query = client.query(kind='pre_interview')
-        pre_interview_query.add_filter('id_company', '=', id_company)
+        pre_interview_query.add_filter('id_company', '=', int(id_company))
         pre_interview_entities = list(pre_interview_query.fetch())
         
         assignments_to_return = []
