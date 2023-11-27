@@ -1,11 +1,13 @@
 # Ejemplo de github action para probar python
 # Docs: https://docs.github.com/es/actions/using-workflows/workflow-syntax-for-github-actions
-name: CI/CD Pipeline Back
+name: CI/CD Pipeline Public
 
 on:
   push:
     branches:
       - main
+    paths:
+      - 'public/**'
 
 env: 
   PROJECT_ID: abc-jobs-miso
@@ -60,6 +62,7 @@ jobs:
       - name: Apply deployment
         working-directory: ./deployment
         run: |
+          kubectl delete -f public.yaml
           kubectl apply -f public.yaml
           kubectl apply -f ingress.yaml
 

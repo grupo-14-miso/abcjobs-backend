@@ -1,3 +1,5 @@
+import os
+
 from flask import Flask
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager
@@ -7,15 +9,16 @@ from firebase_admin import credentials
 from google.cloud import pubsub_v1
 from google.oauth2 import service_account
 
-from src.view.assignments_view import VistaPing, AssignmentsView, AssignmentSubmissionView, QuestionnaireView
+from src.view.assignments_view import VistaPing, AssignmentsView, AssignmentSubmissionView, QuestionnaireView, AssignmentTemplateCandidate, AssignmentPerformanceCompany
 
 
 app = Flask(__name__)
 
 
-cred = credentials.Certificate("./firebase.json")
+data = os.path.abspath(os.path.dirname(__file__)) + "/firebase.json"
+cred = credentials.Certificate(data)
 firebase_admin.initialize_app(cred)
-credentials = service_account.Credentials.from_service_account_file("./firebase.json")
+credentials = service_account.Credentials.from_service_account_file(data)
 app.config['PROPAGATE_EXCEPTIONS'] = True
 
 project_id = 'abc-jobs-miso'
@@ -29,6 +32,9 @@ api.add_resource(VistaPing, "/assignments/ping")
 api.add_resource(AssignmentsView, "/assignments")
 api.add_resource(AssignmentSubmissionView, "/assignments/<string:assignment_id>", resource_class_kwargs={'publisher': publisher, 'topic_path': topic_path})
 api.add_resource(QuestionnaireView, "/assignments/questionnaire/<string:assignment_id>")
+api.add_resource(AssignmentTemplateCandidate, "/assignments/candidate/<string:assignment_template_id>/<string:candidate_key>", "/assignments/candidate/<string:candidate_key>")
+api.add_resource(AssignmentPerformanceCompany, "/assignments/company/<string:id_company>")
+
 
 
 

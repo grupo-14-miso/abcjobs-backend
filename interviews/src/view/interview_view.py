@@ -3,6 +3,8 @@ from google.cloud import datastore
 from flask import request
 from flask import jsonify
 
+from src.utils.utils import remove_password_properties
+
 pre_interview_domain = 'pre_interview'
 candidates_domain ='candidates'
 interviews_domain = 'interviews'
@@ -53,18 +55,19 @@ class VistaInterviewCompany(Resource):
             key_candidate = client.key(candidates_domain, int(candidate_id))
 
             candidate = client.get(key_candidate)
-
-
             # Combine the results
             pre_interview_details = {
                 'key': pre_interview_entity.key.path[-1],
                 'pre_interview': pre_interview_entity,
                 'candidate': candidate if candidate else None,
             }
+            
+            if 'candidate' in pre_interview_details and 'password_hash' in pre_interview_details['candidate']:
+                pre_interview_details['candidate']['password_hash'] = ""
+                pre_interview_details['candidate']['salt'] = ""
 
             all_pre_interview_details.append(pre_interview_details)
-
-        return all_pre_interview_details
+        return jsonify(all_pre_interview_details)
 
 class VistaInterview(Resource):
     def post(self):
@@ -107,8 +110,21 @@ class VistaInterview(Resource):
     def get(self):
         client = datastore.Client()
 
+        candidate_param = request.args.get('candidate')
+        company_param = request.args.get('company')
+
+
         # Query all interviews
         interview_query = client.query(kind=interviews_domain)
+
+        if candidate_param:
+            candidate_array = [candidate_param] 
+            interview_query.add_filter('candidates', 'IN', candidate_array)
+        
+        if company_param:
+            interview_query.add_filter('id_company', '=', company_param)
+        
+
         interview_results = list(interview_query.fetch())
 
         all_interview_details = []
@@ -132,6 +148,7 @@ class VistaInterview(Resource):
                 # Fetch details from candidates entity
                 candidate_key = client.key(candidates_domain, int(candidate_id))
                 candidate_entity = client.get(candidate_key)
+                remove_password_properties(candidate_entity)
 
                 # Fetch details from offers-data entity
                 offer_key = client.key(offers_data_domain, int(interview_entity['id_offer']))
@@ -140,6 +157,8 @@ class VistaInterview(Resource):
                 # Fetch details from companies-data entity
                 company_key = client.key(companies_data_domain, int(interview_entity['id_company']))
                 company_entity = client.get(company_key)
+                remove_password_properties(company_entity)
+
 
                 # Combine all details
                 candidate_details.append({
@@ -152,3 +171,17 @@ class VistaInterview(Resource):
             all_interview_details.append(interview_details)
 
         return jsonify(all_interview_details)
+
+class VistaInterviewResult(Resource):
+    def post(sefl, id_interview):
+        client = datastore.Client()
+        data = request.get_json()
+        result = data['result']
+        key = client.key(interviews_domain, int(id_interview))
+
+        interview = client.get(key)
+        interview['result'] = result
+        interview_ref = datastore.Entity(key=key)
+        interview_ref.update(interview)
+        client.put(interview_ref)
+        return {'message': 'Interviw updated'}, 201

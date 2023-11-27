@@ -10,6 +10,7 @@ WORKDIR $PROJECT_DIR
 # Copy files to docker image
 COPY Pipfile .
 COPY Pipfile.lock .
+COPY newrelic.ini .
 COPY . .
 
 RUN pipenv install --deploy --ignore-pipfile
@@ -17,4 +18,4 @@ RUN pipenv install --deploy --ignore-pipfile
 # Expose port for companies microservice
 EXPOSE 3002
 
-CMD ["pipenv", "run", "python", "main.py"]
+CMD ["pipenv", "run", "newrelic-admin", "run-program", "python", "main.py"]

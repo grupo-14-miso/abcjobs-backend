@@ -8,7 +8,8 @@ import firebase_admin
 from firebase_admin import credentials
 from google.oauth2 import service_account
 
-from src.view.company_view import VistaPing, CompanyView, OfferView, OfferByCompanyView
+from src.view.company_view import VistaPing, CompanyView, OfferView, OfferByCompanyView, EquipoView, EquipoByOfferView, \
+    OfferByIdView
 
 app = Flask(__name__)
 
@@ -20,9 +21,13 @@ app.config['PROPAGATE_EXCEPTIONS'] = True
 
 api = Api(app)
 api.add_resource(VistaPing, "/companies/ping")
+api.add_resource(OfferByIdView, "/companies/offerById/<string:offer_id>")
 api.add_resource(OfferView, "/companies/offer")
 api.add_resource(OfferByCompanyView, "/companies/offer/<string:company_id>")
+api.add_resource(EquipoView, "/companies/equipo")
+api.add_resource(EquipoByOfferView, "/companies/equipo/<string:offer_id>")
 api.add_resource(CompanyView, "/companies")
+
 
 
 cors = CORS(app)

@@ -1,6 +1,9 @@
 from unittest.mock import patch, MagicMock, Mock
 import pytest
+from google.cloud.datastore import Entity
+
 from main import app
+from src.utils.utils import remove_password_properties
 
 # Mock firebase_admin for tests
 firebase_admin = MagicMock()
@@ -17,7 +20,7 @@ def client():
                 with app.test_client() as client:
                     yield client
 @patch('google.cloud.datastore.Client')
-def test_request_pre_onterview(mock_datastore_client, client ):
+def test_request_pre_interview(mock_datastore_client, client ):
 
         mock_client_instance = Mock()
         mock_datastore_client.return_value = mock_client_instance
@@ -32,6 +35,23 @@ def test_request_pre_onterview(mock_datastore_client, client ):
 
         response = client.post("/interviews/pre-candidate", json=test_data)
         assert response.status_code == 200
+
+@patch('google.cloud.datastore.Client')
+def test_request_results(mock_datastore_client, client):
+
+    mock_interview_entity = Mock()
+    mock_datastore_client.get.return_value = mock_interview_entity
+
+    # Prepare test data
+    test_data = {
+        "result": "failed"
+    }
+
+    response = client.post("/interviews/222222", json=test_data)
+    assert response.status_code == 201
+
+
+
 
 
 
@@ -114,6 +134,16 @@ def test_get_request_interview(mock_datastore_client, client):
 
     # You can then assert details about the exception, for example:
     assert "Object of type MagicMock is not JSON serializable" in str(exc_info.value)
+
+
+def test_remove_password_properties(client):
+    entity = Entity()
+    entity.update({
+        'password_hash': '1234',
+        'salt': '1234'
+    })
+    remove_password_properties(entity)
+    assert entity.get('password_hash', '') == ''
 
 
 def test_ping(client):

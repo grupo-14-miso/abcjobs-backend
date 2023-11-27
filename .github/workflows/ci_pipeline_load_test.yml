@@ -3,10 +3,12 @@
 name: CI/CD Pipeline Load Test
 
 on:
-  workflow_run:
-    workflows: [CI/CD Pipeline Back]
-    types:
-      - completed
+  push:
+    branches:
+      - main
+    paths:
+      - 'test-files/**'
+
 
 jobs:
   load-test:
