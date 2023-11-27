@@ -220,6 +220,7 @@ class AssignmentTemplateCandidate(Resource):
         # Initialize the Datastore client
         client = datastore.Client()
         query = client.query(kind=assigments_entity)
+        test_type = ['Language', 'Technical', 'Psychotechnical' ]
 
         results = query.fetch()
         
@@ -231,6 +232,8 @@ class AssignmentTemplateCandidate(Resource):
 
         if status:
             query.add_filter('status', 'IN', status)
+
+        query.add_filter('type', 'IN', test_type)
         
 
         assignments = []
